@@ -18,7 +18,7 @@ requirement_links: ["RC-5"]
 design_links: ["verification/Code_Review_IEEE_1028_Checklist.xlsx"]
 deliverable: "DEL-6"
 risk: "RSK-002"
-status: "ready"
+status: "done"
 ---
 
 # TASK-012 — Review code theo IEEE 1028 và sửa lỗi Major

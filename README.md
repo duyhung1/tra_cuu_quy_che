@@ -11,7 +11,7 @@ Dự án đi theo 8 chặng của bộ prompt và checklist [`sdlc-kit/`](sdlc-k
 | 2 Analysis (PRD, User Stories) | [docs/03-analysis](docs/03-analysis) | Đã duyệt (`analysis-v1`) |
 | 3 Design (SAD, blueprint, sơ đồ) | [docs/04-design](docs/04-design) | Đã duyệt (`design-v1`) |
 | 4 Planning (kế hoạch, tasks) | [docs/05-development](docs/05-development) | Đã duyệt (`plan-v1`) |
-| 5 Build | mã nguồn | Chưa bắt đầu |
+| 5 Build | `app/`, `web/`, `tests/` | Đã duyệt (`build-v1`) |
 | 6 Test (plan, cases, RTM) | docs/07-verification | Chưa bắt đầu |
 | 7 Report (TEST_REPORT) | docs/07-verification | Chưa bắt đầu |
 

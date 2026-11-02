@@ -18,7 +18,7 @@ requirement_links: ["DEP-002", "DEP-003", "MET-002", "MET-003", "MET-004", "MET-
 design_links: ["SRC-006 D3"]
 deliverable: "DEL-5"
 risk: "RSK-002"
-status: "ready"
+status: "done"
 ---
 
 # TASK-011 — Văn bản mẫu giả lập (DEP-002) và golden set (DEP-003)

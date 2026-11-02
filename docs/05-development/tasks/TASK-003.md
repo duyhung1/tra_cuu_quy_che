@@ -18,7 +18,7 @@ requirement_links: ["FR-003", "FR-009", "FR-010", "US-002"]
 design_links: ["CMP-03", "blueprint §6.1–6.3", "BRU-002"]
 deliverable: "DEL-2"
 risk: "RSK-001"
-status: "ready"
+status: "done"
 ---
 
 # TASK-003 — Nhận diện Chương/Điều/Khoản, số hiệu, tên, ngày hiệu lực, liên kết sửa đổi

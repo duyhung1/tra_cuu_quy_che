@@ -18,7 +18,7 @@ requirement_links: ["FR-001", "FR-006", "FR-013", "FR-014", "FR-015", "FR-017", 
 design_links: ["CMP-02", "CMP-08", "blueprint §5", "SAD §3.3"]
 deliverable: "DEL-3"
 risk: "RSK-002"
-status: "ready"
+status: "done"
 ---
 
 # TASK-009 — Ask service (timeout 30 s, số liệu) và các route API-01..04

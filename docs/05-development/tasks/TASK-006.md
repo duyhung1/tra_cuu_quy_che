@@ -18,7 +18,7 @@ requirement_links: ["FR-005", "FR-007", "NFR-001"]
 design_links: ["CMP-05", "blueprint §6.4", "ADR-003"]
 deliverable: "DEL-3"
 risk: "RSK-002"
-status: "ready"
+status: "done"
 ---
 
 # TASK-006 — BM25 trên đơn vị Khoản của văn bản Sẵn sàng

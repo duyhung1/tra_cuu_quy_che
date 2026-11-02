@@ -18,7 +18,7 @@ requirement_links: ["FR-004", "FR-005", "FR-014", "FR-017", "NFR-003", "US-007"]
 design_links: ["CMP-04", "CMP-09", "blueprint §4", "ADR-002"]
 deliverable: "DEL-2"
 risk: "RSK-002"
-status: "ready"
+status: "done"
 ---
 
 # TASK-005 — Store SQLite và usage log

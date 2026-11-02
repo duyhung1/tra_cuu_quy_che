@@ -18,7 +18,7 @@ requirement_links: ["FR-001", "FR-004", "FR-006", "FR-008", "FR-013", "FR-015", 
 design_links: ["CMP-01", "blueprint §7"]
 deliverable: "DEL-4"
 risk: "RSK-002"
-status: "ready"
+status: "done"
 ---
 
 # TASK-010 — Web UI tĩnh: Tra cứu và Văn bản

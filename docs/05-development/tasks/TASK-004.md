@@ -18,7 +18,7 @@ requirement_links: ["FR-001", "FR-002", "FR-012", "FR-016", "NFR-002", "NFR-010"
 design_links: ["CMP-03", "SAD §3.2", "blueprint §6.6", "ADR-004"]
 deliverable: "DEL-2"
 risk: "RSK-002"
-status: "ready"
+status: "done"
 ---
 
 # TASK-004 — Kiểm tra tệp, trích PDF, lọc chỉ dẫn, dịch vụ ingest

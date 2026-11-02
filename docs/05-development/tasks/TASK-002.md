@@ -18,7 +18,7 @@ requirement_links: ["FR-002", "FR-006", "NFR-007"]
 design_links: ["blueprint §3", "blueprint §5", "blueprint §6.4"]
 deliverable: "DEL-1"
 risk: "RSK-002"
-status: "ready"
+status: "done"
 ---
 
 # TASK-002 — Kiểu miền, bảng mã lỗi tiếng Việt, chuẩn hóa và tách từ

@@ -84,3 +84,12 @@ All checks passed!
 
 **Approve with conditions** — 2 Major, 8 Minor.
 Điều kiện: (1) sửa CR-R-01 (an toàn đa luồng khi rebuild/search) và có test; (2) xử lý hoặc ghi nhận CR-R-02 và thêm test timeout 30 s; (3) PO quyết định CR-001 tại cổng Build. Các Minor có thể chuyển sang backlog.
+
+
+## Quyết định của PO (2026-11-02)
+
+- **CR-R-01:** đã sửa ở commit `1e6c608` (snapshot chỉ mục bất biến, khóa khi dựng lại), có test `test_rebuild_during_questions_never_fails`.
+- **CR-R-02:** đã ghi nhận trong code và có test `test_timeout_is_503_and_logged`. Rủi ro còn lại (luồng hết giờ vẫn giữ worker) được chấp nhận vì pipeline chỉ mất mili-giây (đo ở TEST_REPORT).
+- **CR-001:** PO duyệt.
+- **8 Minor:** đưa vào backlog.
+- **Kết luận:** PO duyệt cổng Build, baseline `build-v1`. Test sau khi sửa: 45 passed; ruff: All checks passed.

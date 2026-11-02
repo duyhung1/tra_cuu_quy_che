@@ -18,7 +18,7 @@ requirement_links: ["FR-009", "FR-010", "FR-020", "US-004", "US-006"]
 design_links: ["CMP-06", "blueprint §6.5", "BRU-001", "BRU-003"]
 deliverable: "DEL-3"
 risk: "RSK-001"
-status: "ready"
+status: "done"
 ---
 
 # TASK-007 — Resolver: văn bản hiệu lực muộn hơn, văn bản chưa hiệu lực

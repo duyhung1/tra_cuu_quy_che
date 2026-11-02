@@ -18,7 +18,7 @@ requirement_links: ["FR-007", "FR-008", "FR-011", "FR-019", "US-003", "US-005"]
 design_links: ["CMP-07", "blueprint §6.7", "ADR-001"]
 deliverable: "DEL-3"
 risk: "RSK-001"
-status: "ready"
+status: "done"
 ---
 
 # TASK-008 — RuleBasedAnswerer: câu trả lời có [n], NOT_FOUND, sources

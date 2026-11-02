@@ -18,7 +18,7 @@ requirement_links: ["NFR-007"]
 design_links: ["CMP-02", "blueprint §2"]
 deliverable: "DEL-1"
 risk: "RSK-002"
-status: "ready"
+status: "done"
 ---
 
 # TASK-001 — Khung repo: config, wiring, app FastAPI, healthz, import-rule test
