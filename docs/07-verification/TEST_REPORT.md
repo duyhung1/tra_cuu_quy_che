@@ -3,7 +3,7 @@
 | Mục | Giá trị |
 |---|---|
 | Report ID | TCQC-TSR-001, version 1.0 |
-| Status | Chờ PO ký |
+| Status | Đã ký — GO with conditions (PO, 2026-11-02) |
 | Owner / Approver | Phùng Duy Hùng (PO) |
 | Author | AI agent (Claude Code) |
 | Date | 2026-11-02 |
@@ -76,7 +76,7 @@ Kết quả theo [RTM](RTM.md): 30 tiêu chí, gồm 27 PASS, 1 FAIL (TC-029, P1
 | RC-3 | Đạt (24/24 P0; TC-029 là P1) |
 | RC-4 | Đạt |
 | RC-5 | Đạt (`code-review.md`: 2 Major đã sửa, PO duyệt cổng Build) |
-| RC-6 | Chờ PO ký |
+| RC-6 | Đạt: PO ký GO with conditions, 2026-11-02 |
 
 ## 5. What was not tested
 
@@ -112,4 +112,4 @@ Agent không được kết luận GO (CON-07); quyết định thuộc PO.
 
 | Vai trò | Tên | Quyết định | Ngày |
 |---|---|---|---|
-| PO / Approver | Phùng Duy Hùng | _(chờ)_ | |
+| PO / Approver | Phùng Duy Hùng | **GO with conditions**: phát hành bản dùng thử nội bộ trên dữ liệu giả lập, kèm 3 điều kiện ở trên | 2026-11-02 |
