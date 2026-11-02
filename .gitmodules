@@ -1,0 +1,3 @@
+[submodule "sdlc-kit"]
+	path = sdlc-kit
+	url = https://github.com/minhtrantrong/SDLC-Prompt-Checklist.git
