@@ -1,0 +1,21 @@
+<mxfile host="tcqc"><diagram name="Component view"><mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+<mxCell id="ui" value="CMP-01 Web UI" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="40" y="40" width="170" height="50" as="geometry"/></mxCell>
+<mxCell id="api" value="CMP-02 HTTP API" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="40" y="140" width="170" height="50" as="geometry"/></mxCell>
+<mxCell id="ing" value="CMP-03 Ingestion" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="-160" y="240" width="170" height="50" as="geometry"/></mxCell>
+<mxCell id="ask" value="CMP-08 Ask service" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="240" y="240" width="170" height="50" as="geometry"/></mxCell>
+<mxCell id="ret" value="CMP-05 Retriever (BM25)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="120" y="360" width="170" height="50" as="geometry"/></mxCell>
+<mxCell id="res" value="CMP-06 Effective-date resolver" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="320" y="360" width="200" height="50" as="geometry"/></mxCell>
+<mxCell id="ans" value="CMP-07 Answerer (port)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="540" y="360" width="170" height="50" as="geometry"/></mxCell>
+<mxCell id="log" value="CMP-09 Usage log" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="540" y="240" width="170" height="50" as="geometry"/></mxCell>
+<mxCell id="st" value="CMP-04 Store (SQLite)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="-60" y="480" width="200" height="50" as="geometry"/></mxCell>
+<mxCell id="e1" value="JSON" style="endArrow=block;html=1;" edge="1" parent="1" source="ui" target="api"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e2" value="" style="endArrow=block;html=1;" edge="1" parent="1" source="api" target="ing"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e3" value="" style="endArrow=block;html=1;" edge="1" parent="1" source="api" target="ask"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e4" value="" style="endArrow=block;html=1;" edge="1" parent="1" source="ask" target="ret"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e5" value="" style="endArrow=block;html=1;" edge="1" parent="1" source="ask" target="res"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e6" value="" style="endArrow=block;html=1;" edge="1" parent="1" source="ask" target="ans"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e7" value="" style="endArrow=block;html=1;" edge="1" parent="1" source="ask" target="log"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e8" value="" style="endArrow=block;html=1;" edge="1" parent="1" source="ing" target="st"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e9" value="" style="endArrow=block;html=1;" edge="1" parent="1" source="ret" target="st"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e10" value="" style="endArrow=block;html=1;" edge="1" parent="1" source="log" target="st"><mxGeometry relative="1" as="geometry"/></mxCell>
+</root></mxGraphModel></diagram></mxfile>
