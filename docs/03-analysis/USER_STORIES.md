@@ -3,7 +3,7 @@
 | Mục | Giá trị |
 |---|---|
 | Document ID | TCQC-US |
-| Version | 0.1 |
+| Version | 0.2 |
 | Status | In review |
 | Owner / Approver | Phùng Duy Hùng (PO) |
 | Date | 2026-11-02 |
@@ -14,18 +14,18 @@ Persona: Lan (nhân viên), Minh (HC-NS), Hà (kế toán), PO. Xem PRD §2.1.
 
 ## E1 — Kho văn bản
 
-### US-001 — Đưa văn bản vào kho (P0) · FR-001, FR-002 · BR-001, BR-002
+### US-001 — Đưa văn bản vào kho (P0) · FR-001, FR-002, FR-016 · BR-001, BR-002
 Là **Minh (HC-NS)**, tôi muốn đưa nhiều PDF quy chế vào cùng một lần, để văn bản mới được dùng để trả lời ngay.
 
 | AC | Given | When | Then |
 |---|---|---|---|
 | US-001-AC1 | kho trống | đưa 3 văn bản mẫu hợp lệ vào một lần | cả 3 được nhận và chuyển sang Sẵn sàng |
-| US-001-AC2 | đã chọn 11 tệp | gửi | cả lần bị từ chối với lý do "Mỗi lần chỉ tải tối đa 10 tệp" |
+| US-001-AC2 | đang chọn tệp | chọn 11 tệp | cả lần bị từ chối ngay, trước khi gửi, với thông báo "Mỗi lần chỉ tải tối đa 10 tệp" |
 | US-001-AC3 | một lần gồm 1 tệp hợp lệ, 1 PDF scan, 1 PDF có mật khẩu, 1 tệp hỏng, 1 tệp không phải PDF | gửi | tệp hợp lệ được nhận; 4 tệp còn lại mỗi tệp hiện đúng một lý do tiếng Việt |
 | US-001-AC4 | kho đã có "Noi_quy.pdf" | đưa thêm một tệp cùng tên | tệp bị từ chối với lý do "Đã có văn bản cùng tên" |
 | US-001-AC5 | một tệp > 20 MB hoặc > 300 trang | gửi | tệp bị từ chối với lý do vượt giới hạn tương ứng |
 
-### US-002 — Xem văn bản đang dùng (P0) · FR-003, FR-004, FR-005 · BR-003
+### US-002 — Xem văn bản đang dùng (P0) · FR-003, FR-004, FR-004b, FR-005 · BR-002, BR-003
 Là **Hà (kế toán)**, tôi muốn thấy danh sách văn bản đang dùng kèm số hiệu và ngày hiệu lực, để biết câu trả lời dựa trên văn bản nào.
 
 | AC | Given | When | Then |
@@ -37,7 +37,7 @@ Là **Hà (kế toán)**, tôi muốn thấy danh sách văn bản đang dùng k
 
 ## E2 — Tra cứu có căn cứ
 
-### US-003 — Hỏi và nhận câu trả lời có căn cứ (P0) · FR-006, FR-007, FR-008 · BR-004, BR-005, BR-016
+### US-003 — Hỏi và nhận câu trả lời có căn cứ (P0) · FR-006, FR-007, FR-007b, FR-008 · BR-004, BR-005, BR-016
 Là **Lan (nhân viên)**, tôi muốn hỏi bằng tiếng Việt và nhận câu trả lời kèm Điều/Khoản, để làm đúng thủ tục mà không phải hỏi HC-NS.
 
 | AC | Given | When | Then |
@@ -47,7 +47,7 @@ Là **Lan (nhân viên)**, tôi muốn hỏi bằng tiếng Việt và nhận c�
 | US-003-AC3 | ô hỏi rỗng hoặc > 2000 ký tự | cố gửi | không gửi được; bộ đếm báo lỗi |
 | US-003-AC4 | golden set | chạy toàn bộ | MET-002 ≥ 80 %, MET-007 ≥ 80 % |
 
-### US-004 — Áp dụng văn bản hiệu lực muộn hơn (P0) · FR-009 · BR-006, BR-007
+### US-004 — Áp dụng văn bản hiệu lực muộn hơn (P0) · FR-009, FR-009b · BR-006, BR-007
 Là **Hà (kế toán)**, tôi muốn câu trả lời dùng mức của quyết định sửa đổi mới nhất và nêu mức cũ, để không chi theo quy định đã bị thay.
 
 | AC | Given | When | Then |
@@ -95,7 +95,7 @@ Là **Lan (nhân viên)**, tôi muốn không mất câu hỏi khi hệ thống 
 
 ## E3 — Đo lường
 
-### US-007 — Số liệu sử dụng không chứa nội dung (P0) · FR-014 · BR-010, BR-011
+### US-007 — Số liệu sử dụng không chứa nội dung (P0) · FR-014, FR-017 · BR-010, BR-011
 Là **PO**, tôi muốn mỗi câu hỏi để lại một bản ghi số liệu không có nội dung, để đo được KR mà không làm lộ thông tin.
 
 | AC | Given | When | Then |
