@@ -2,8 +2,8 @@
 
 | Mục | Giá trị |
 |---|---|
-| 1.0 Test plan identifier | TCQC-TP-001, version 0.1 |
-| Status | In review |
+| 1.0 Test plan identifier | TCQC-TP-001, version 1.0 |
+| Status | Đã thực thi (run 20261102-2306-8ae514b-local-win) |
 | Owner / Approver | Phùng Duy Hùng (PO) |
 | Author | AI agent (Claude Code) |
 | Date | 2026-11-02 |

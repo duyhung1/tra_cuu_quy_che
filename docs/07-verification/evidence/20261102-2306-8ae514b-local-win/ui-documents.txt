@@ -1,0 +1,99 @@
+{
+ "items": [
+  {
+   "id": 8,
+   "filename": "scan.pdf",
+   "title": null,
+   "doc_number": null,
+   "effective_date": null,
+   "pages": null,
+   "status": "failed",
+   "error_code": "no_text_layer",
+   "message": "PDF dạng ảnh chưa được hỗ trợ"
+  },
+  {
+   "id": 7,
+   "filename": "mat_khau.pdf",
+   "title": null,
+   "doc_number": null,
+   "effective_date": null,
+   "pages": null,
+   "status": "failed",
+   "error_code": "encrypted_pdf",
+   "message": "Tệp có mật khẩu"
+  },
+  {
+   "id": 6,
+   "filename": "hong.pdf",
+   "title": null,
+   "doc_number": null,
+   "effective_date": null,
+   "pages": null,
+   "status": "failed",
+   "error_code": "corrupted",
+   "message": "Tệp bị hỏng"
+  },
+  {
+   "id": 5,
+   "filename": "Thong_bao_nop_chung_tu_2026.pdf",
+   "title": "THÔNG BÁO Về việc nộp chứng từ công tác",
+   "doc_number": "09/2026/TB-SM",
+   "effective_date": "2026-08-01",
+   "pages": 1,
+   "status": "ready",
+   "error_code": null,
+   "message": null
+  },
+  {
+   "id": 4,
+   "filename": "Quyet_dinh_sua_doi_phu_cap_luu_tru_2026.pdf",
+   "title": "QUYẾT ĐỊNH Về việc sửa đổi mức phụ cấp lưu trú",
+   "doc_number": "02/2026/QĐ-SM",
+   "effective_date": "2026-07-01",
+   "pages": 1,
+   "status": "ready",
+   "error_code": null,
+   "message": null
+  },
+  {
+   "id": 3,
+   "filename": "Quyet_dinh_sua_doi_nghi_phep_2027.pdf",
+   "title": "QUYẾT ĐỊNH Về việc sửa đổi số ngày nghỉ phép năm",
+   "doc_number": "05/2026/QĐ-SM",
+   "effective_date": "2027-01-01",
+   "pages": 1,
+   "status": "ready",
+   "error_code": null,
+   "message": null
+  },
+  {
+   "id": 2,
+   "filename": "Quy_che_chi_tieu_noi_bo_2025.pdf",
+   "title": "QUY CHẾ CHI TIÊU NỘI BỘ",
+   "doc_number": "08/2025/QC-SM",
+   "effective_date": "2025-01-01",
+   "pages": 2,
+   "status": "ready",
+   "error_code": null,
+   "message": null
+  },
+  {
+   "id": 1,
+   "filename": "Noi_quy_lao_dong_2025.pdf",
+   "title": "NỘI QUY LAO ĐỘNG",
+   "doc_number": "15/2025/NQ-SM",
+   "effective_date": "2025-03-10",
+   "pages": 2,
+   "status": "ready",
+   "error_code": null,
+   "message": null
+  }
+ ],
+ "counts": {
+  "ready": 5,
+  "processing": 0,
+  "failed": 3,
+  "total": 8
+ },
+ "limit": 50
+}

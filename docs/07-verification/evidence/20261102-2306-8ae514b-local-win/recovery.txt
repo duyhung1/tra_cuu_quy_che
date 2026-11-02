@@ -1,0 +1,6 @@
+TC-028 NFR-005 recovery drill
+ready before deletion: 5
+DB deleted: True
+re-upload of 5 originals: ['ready', 'ready', 'ready', 'ready', 'ready']
+ready after: 5
+elapsed: 0.18 s (RTO 1 working day) => PASS

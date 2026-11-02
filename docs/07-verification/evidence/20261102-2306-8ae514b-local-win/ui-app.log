@@ -1,0 +1,10 @@
+{"level": "INFO", "event": "ingest_done", "document_id": 1, "pages": 2, "units": 6, "filtered": 0, "processing_ms": 49}
+{"level": "INFO", "event": "ingest_done", "document_id": 2, "pages": 2, "units": 7, "filtered": 0, "processing_ms": 34}
+{"level": "INFO", "event": "ingest_done", "document_id": 3, "pages": 1, "units": 2, "filtered": 0, "processing_ms": 25}
+{"level": "INFO", "event": "ingest_done", "document_id": 4, "pages": 1, "units": 3, "filtered": 0, "processing_ms": 25}
+{"level": "INFO", "event": "ingest_done", "document_id": 5, "pages": 1, "units": 2, "filtered": 1, "processing_ms": 24}
+{"level": "INFO", "event": "ingest_failed", "error_code": "corrupted"}
+{"level": "INFO", "event": "ingest_failed", "error_code": "encrypted_pdf"}
+{"level": "INFO", "event": "ingest_failed", "error_code": "no_text_layer"}
+{"level": "INFO", "event": "ask_done", "latency_ms": 32, "cited_count": 3, "found": true}
+{"level": "INFO", "event": "ask_done", "latency_ms": 20, "cited_count": 0, "found": false}

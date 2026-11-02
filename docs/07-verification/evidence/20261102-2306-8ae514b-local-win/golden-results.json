@@ -1,0 +1,387 @@
+{
+ "summary": {
+  "today": "2026-11-02",
+  "upload": [
+   {
+    "filename": "Noi_quy_lao_dong_2025.pdf",
+    "status": "ready",
+    "document_id": 1
+   },
+   {
+    "filename": "Quy_che_chi_tieu_noi_bo_2025.pdf",
+    "status": "ready",
+    "document_id": 2
+   },
+   {
+    "filename": "Quyet_dinh_sua_doi_nghi_phep_2027.pdf",
+    "status": "ready",
+    "document_id": 3
+   },
+   {
+    "filename": "Quyet_dinh_sua_doi_phu_cap_luu_tru_2026.pdf",
+    "status": "ready",
+    "document_id": 4
+   },
+   {
+    "filename": "Thong_bao_nop_chung_tu_2026.pdf",
+    "status": "ready",
+    "document_id": 5
+   }
+  ],
+  "MET-002 positive (incl. conflict/future)": [
+   12,
+   12
+  ],
+  "MET-003 conflict": [
+   3,
+   3
+  ],
+  "future (AC-013/015)": [
+   1,
+   1
+  ],
+  "MET-004 negative": [
+   5,
+   5
+  ],
+  "MET-007 faq": [
+   8,
+   8
+  ],
+  "MET-006 p90_latency_ms": 18.2,
+  "NFR-003 leaks": [],
+  "threshold": "2.0",
+  "min_coverage": "0.5"
+ },
+ "rows": [
+  {
+   "id": "G-01",
+   "type": "positive",
+   "faq": true,
+   "question": "Thời giờ làm việc của công ty là mấy giờ?",
+   "http": 200,
+   "found": true,
+   "latency_ms": 18,
+   "first_source": {
+    "ref": 1,
+    "filename": "Noi_quy_lao_dong_2025.pdf",
+    "doc_title": "NỘI QUY LAO ĐỘNG",
+    "doc_number": "15/2025/NQ-SM",
+    "effective_date": "2025-03-10",
+    "article": "Điều 4",
+    "clause": "khoản 1",
+    "page": 1
+   },
+   "answer": "1. Thời giờ làm việc từ 08 giờ 00 đến 17 giờ 30, từ thứ Hai đến thứ Sáu. [1]\n\n2. Thời gian nghỉ trưa từ 12 giờ 00 đến 13 giờ 30. [2]",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-02",
+   "type": "positive",
+   "faq": true,
+   "question": "Đi muộn bao nhiêu lần trong tháng thì bị khiển trách?",
+   "http": 200,
+   "found": true,
+   "latency_ms": 13,
+   "first_source": {
+    "ref": 1,
+    "filename": "Noi_quy_lao_dong_2025.pdf",
+    "doc_title": "NỘI QUY LAO ĐỘNG",
+    "doc_number": "15/2025/NQ-SM",
+    "effective_date": "2025-03-10",
+    "article": "Điều 9",
+    "clause": null,
+    "page": 2
+   },
+   "answer": "Người lao động đi muộn quá 03 lần trong một tháng bị xử lý kỷ luật bằng hình thức khiển trách. [1]",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-03",
+   "type": "positive",
+   "faq": true,
+   "question": "Đi công tác chặng bao xa thì được mua vé máy bay?",
+   "http": 200,
+   "found": true,
+   "latency_ms": 10,
+   "first_source": {
+    "ref": 1,
+    "filename": "Quy_che_chi_tieu_noi_bo_2025.pdf",
+    "doc_title": "QUY CHẾ CHI TIÊU NỘI BỘ",
+    "doc_number": "08/2025/QC-SM",
+    "effective_date": "2025-01-01",
+    "article": "Điều 6",
+    "clause": "khoản 1",
+    "page": 2
+   },
+   "answer": "1. Chặng đi công tác từ 300 km trở lên được mua vé máy bay hạng phổ thông. [1]\n\n2. Chặng dưới 300 km đi bằng tàu hỏa, ô tô hoặc xe của Công ty. [2]",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-04",
+   "type": "positive",
+   "faq": true,
+   "question": "Mức chi tiếp khách tối đa mỗi lần là bao nhiêu?",
+   "http": 200,
+   "found": true,
+   "latency_ms": 12,
+   "first_source": {
+    "ref": 1,
+    "filename": "Quy_che_chi_tieu_noi_bo_2025.pdf",
+    "doc_title": "QUY CHẾ CHI TIÊU NỘI BỘ",
+    "doc_number": "08/2025/QC-SM",
+    "effective_date": "2025-01-01",
+    "article": "Điều 8",
+    "clause": null,
+    "page": 2
+   },
+   "answer": "Mức chi tiếp khách tối đa 2.000.000 đồng/lần và phải được Trưởng phòng phê duyệt trước. [1]",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-05",
+   "type": "positive",
+   "faq": true,
+   "question": "Nhân viên phải nộp chứng từ công tác phí trong bao lâu?",
+   "http": 200,
+   "found": true,
+   "latency_ms": 11,
+   "first_source": {
+    "ref": 1,
+    "filename": "Thong_bao_nop_chung_tu_2026.pdf",
+    "doc_title": "THÔNG BÁO Về việc nộp chứng từ công tác",
+    "doc_number": "09/2026/TB-SM",
+    "effective_date": "2026-08-01",
+    "article": "Điều 1",
+    "clause": "khoản 2",
+    "page": 1
+   },
+   "answer": "2. Nhân viên nộp chứng từ công tác phí cho phòng kế toán trong 05 ngày làm việc sau khi về. [1]",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-06",
+   "type": "positive",
+   "faq": true,
+   "question": "Thời gian nghỉ trưa từ mấy giờ đến mấy giờ?",
+   "http": 200,
+   "found": true,
+   "latency_ms": 11,
+   "first_source": {
+    "ref": 1,
+    "filename": "Noi_quy_lao_dong_2025.pdf",
+    "doc_title": "NỘI QUY LAO ĐỘNG",
+    "doc_number": "15/2025/NQ-SM",
+    "effective_date": "2025-03-10",
+    "article": "Điều 4",
+    "clause": "khoản 2",
+    "page": 1
+   },
+   "answer": "2. Thời gian nghỉ trưa từ 12 giờ 00 đến 13 giờ 30. [1]\n\n1. Thời giờ làm việc từ 08 giờ 00 đến 17 giờ 30, từ thứ Hai đến thứ Sáu. [2]",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-07",
+   "type": "positive",
+   "faq": false,
+   "question": "Đi công tác trong ngày thì được phụ cấp lưu trú bao nhiêu?",
+   "http": 200,
+   "found": true,
+   "latency_ms": 13,
+   "first_source": {
+    "ref": 1,
+    "filename": "Quy_che_chi_tieu_noi_bo_2025.pdf",
+    "doc_title": "QUY CHẾ CHI TIÊU NỘI BỘ",
+    "doc_number": "08/2025/QC-SM",
+    "effective_date": "2025-01-01",
+    "article": "Điều 5",
+    "clause": "khoản 2",
+    "page": 1
+   },
+   "answer": "2. Đi công tác trong ngày (đi và về trong ngày) được hưởng phụ cấp lưu trú 150.000 đồng. [1]\n\n1. Người được cử đi công tác được hưởng phụ cấp lưu trú 300.000 đồng/ngày. [2]",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-08",
+   "type": "positive",
+   "faq": false,
+   "question": "Đi công tác ở tỉnh miền núi, hải đảo được phụ cấp lưu trú bao nhiêu?",
+   "http": 200,
+   "found": true,
+   "latency_ms": 16,
+   "first_source": {
+    "ref": 1,
+    "filename": "Quyet_dinh_sua_doi_phu_cap_luu_tru_2026.pdf",
+    "doc_title": "QUYẾT ĐỊNH Về việc sửa đổi mức phụ cấp lưu trú",
+    "doc_number": "02/2026/QĐ-SM",
+    "effective_date": "2026-07-01",
+    "article": "Điều 1",
+    "clause": "khoản 2",
+    "page": 1
+   },
+   "answer": "2. Đi công tác tại các tỉnh miền núi, hải đảo được hưởng phụ cấp lưu trú 500.000 đồng/ngày. [1]\n\n1. Người được cử đi công tác được hưởng phụ cấp lưu trú 450.000 đồng/ngày. [2]",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-09",
+   "type": "conflict",
+   "faq": true,
+   "question": "Phụ cấp lưu trú khi đi công tác hiện nay là bao nhiêu một ngày?",
+   "http": 200,
+   "found": true,
+   "latency_ms": 15,
+   "first_source": {
+    "ref": 1,
+    "filename": "Quyet_dinh_sua_doi_phu_cap_luu_tru_2026.pdf",
+    "doc_title": "QUYẾT ĐỊNH Về việc sửa đổi mức phụ cấp lưu trú",
+    "doc_number": "02/2026/QĐ-SM",
+    "effective_date": "2026-07-01",
+    "article": "Điều 1",
+    "clause": "khoản 1",
+    "page": 1
+   },
+   "answer": "1. Người được cử đi công tác được hưởng phụ cấp lưu trú 450.000 đồng/ngày. [1]\n\n2. Đi công tác tại các tỉnh miền núi, hải đảo được hưởng phụ cấp lưu trú 500.000 đồng/ngày. [2]\n\nQuy định này thay thế Điều 5, khoản 1 của QUY CHẾ CHI TIÊU NỘI BỘ số 08/2025/QC-SM (trước đây: «1. Người được cử đi công tác được hưởng phụ cấp lưu trú 300.000 đồng/ngày.») [3]",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-10",
+   "type": "conflict",
+   "faq": false,
+   "question": "Người được cử đi công tác được hưởng phụ cấp lưu trú mỗi ngày là bao nhiêu?",
+   "http": 200,
+   "found": true,
+   "latency_ms": 15,
+   "first_source": {
+    "ref": 1,
+    "filename": "Quyet_dinh_sua_doi_phu_cap_luu_tru_2026.pdf",
+    "doc_title": "QUYẾT ĐỊNH Về việc sửa đổi mức phụ cấp lưu trú",
+    "doc_number": "02/2026/QĐ-SM",
+    "effective_date": "2026-07-01",
+    "article": "Điều 1",
+    "clause": "khoản 1",
+    "page": 1
+   },
+   "answer": "1. Người được cử đi công tác được hưởng phụ cấp lưu trú 450.000 đồng/ngày. [1]\n\n2. Đi công tác tại các tỉnh miền núi, hải đảo được hưởng phụ cấp lưu trú 500.000 đồng/ngày. [2]\n\nQuy định này thay thế Điều 5, khoản 1 của QUY CHẾ CHI TIÊU NỘI BỘ số 08/2025/QC-SM (trước đây: «1. Người được cử đi công tác được hưởng phụ cấp lưu trú 300.000 đồng/ngày.») [3]",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-11",
+   "type": "conflict",
+   "faq": false,
+   "question": "Mức phụ cấp lưu trú 300.000 đồng mỗi ngày của Quy chế chi tiêu nội bộ còn áp dụng không?",
+   "http": 200,
+   "found": true,
+   "latency_ms": 15,
+   "first_source": {
+    "ref": 1,
+    "filename": "Quyet_dinh_sua_doi_phu_cap_luu_tru_2026.pdf",
+    "doc_title": "QUYẾT ĐỊNH Về việc sửa đổi mức phụ cấp lưu trú",
+    "doc_number": "02/2026/QĐ-SM",
+    "effective_date": "2026-07-01",
+    "article": "Điều 1",
+    "clause": "khoản 1",
+    "page": 1
+   },
+   "answer": "1. Người được cử đi công tác được hưởng phụ cấp lưu trú 450.000 đồng/ngày. [1]\n\n2. Đi công tác tại các tỉnh miền núi, hải đảo được hưởng phụ cấp lưu trú 500.000 đồng/ngày. [2]\n\nQuy định này thay thế Điều 5, khoản 1 của QUY CHẾ CHI TIÊU NỘI BỘ số 08/2025/QC-SM (trước đây: «1. Người được cử đi công tác được hưởng phụ cấp lưu trú 300.000 đồng/ngày.») [3]",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-12",
+   "type": "future",
+   "faq": true,
+   "question": "Người lao động làm việc đủ 12 tháng được nghỉ bao nhiêu ngày phép năm?",
+   "http": 200,
+   "found": true,
+   "latency_ms": 15,
+   "first_source": {
+    "ref": 1,
+    "filename": "Noi_quy_lao_dong_2025.pdf",
+    "doc_title": "NỘI QUY LAO ĐỘNG",
+    "doc_number": "15/2025/NQ-SM",
+    "effective_date": "2025-03-10",
+    "article": "Điều 7",
+    "clause": "khoản 1",
+    "page": 1
+   },
+   "answer": "1. Người lao động làm việc đủ 12 tháng được nghỉ 12 ngày phép năm hưởng nguyên lương. [1]\n\n2. Cứ đủ 05 năm làm việc thì số ngày nghỉ phép năm được tăng thêm 01 ngày. [2]\n\nLưu ý: Điều 1, khoản 1 của QUYẾT ĐỊNH Về việc sửa đổi số ngày nghỉ phép năm số 05/2026/QĐ-SM sắp có hiệu lực từ 01/01/2027: «1. Người lao động làm việc đủ 12 tháng được nghỉ 14 ngày phép năm hưởng nguyên lương.» [3]",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-51",
+   "type": "negative",
+   "faq": false,
+   "question": "Công ty thưởng Tết bao nhiêu tháng lương?",
+   "http": 200,
+   "found": false,
+   "latency_ms": 19,
+   "first_source": {},
+   "answer": "Không tìm thấy quy định này trong các văn bản đã tải lên.",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-52",
+   "type": "negative",
+   "faq": false,
+   "question": "Thủ đô của Pháp là gì?",
+   "http": 200,
+   "found": false,
+   "latency_ms": 18,
+   "first_source": {},
+   "answer": "Không tìm thấy quy định này trong các văn bản đã tải lên.",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-53",
+   "type": "negative",
+   "faq": false,
+   "question": "Theo Bộ luật Lao động, thời gian thử việc tối đa là bao lâu?",
+   "http": 200,
+   "found": false,
+   "latency_ms": 17,
+   "first_source": {},
+   "answer": "Không tìm thấy quy định này trong các văn bản đã tải lên.",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-54",
+   "type": "negative",
+   "faq": false,
+   "question": "Làm thêm giờ vào ngày lễ được trả lương bao nhiêu phần trăm?",
+   "http": 200,
+   "found": false,
+   "latency_ms": 17,
+   "first_source": {},
+   "answer": "Không tìm thấy quy định này trong các văn bản đã tải lên.",
+   "correct": true,
+   "why": []
+  },
+  {
+   "id": "G-55",
+   "type": "negative",
+   "faq": false,
+   "question": "Công ty có mua bảo hiểm sức khỏe cho người thân của nhân viên không?",
+   "http": 200,
+   "found": false,
+   "latency_ms": 17,
+   "first_source": {},
+   "answer": "Không tìm thấy quy định này trong các văn bản đã tải lên.",
+   "correct": true,
+   "why": []
+  }
+ ]
+}

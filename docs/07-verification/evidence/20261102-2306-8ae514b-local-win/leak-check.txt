@@ -1,0 +1,5 @@
+UI session leak check (TC-018, NFR-003). log file: C:\Users\duyhung\AppData\Local\Temp\ui-app.log; db: ['C:\\Users\\duyhung\\AppData\\Local\\Temp\\ui.db']
+question in log: False; question in db/wal: False
+question in log: False; question in db/wal: False
+golden run leaks (17 questions, app.log + golden.db): []
+RESULT: PASS

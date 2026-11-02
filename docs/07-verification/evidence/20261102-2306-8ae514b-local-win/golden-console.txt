@@ -1,0 +1,74 @@
+D:\tra_cuu_quy_che\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+{
+ "today": "2026-11-02",
+ "upload": [
+  {
+   "filename": "Noi_quy_lao_dong_2025.pdf",
+   "status": "ready",
+   "document_id": 1
+  },
+  {
+   "filename": "Quy_che_chi_tieu_noi_bo_2025.pdf",
+   "status": "ready",
+   "document_id": 2
+  },
+  {
+   "filename": "Quyet_dinh_sua_doi_nghi_phep_2027.pdf",
+   "status": "ready",
+   "document_id": 3
+  },
+  {
+   "filename": "Quyet_dinh_sua_doi_phu_cap_luu_tru_2026.pdf",
+   "status": "ready",
+   "document_id": 4
+  },
+  {
+   "filename": "Thong_bao_nop_chung_tu_2026.pdf",
+   "status": "ready",
+   "document_id": 5
+  }
+ ],
+ "MET-002 positive (incl. conflict/future)": [
+  12,
+  12
+ ],
+ "MET-003 conflict": [
+  3,
+  3
+ ],
+ "future (AC-013/015)": [
+  1,
+  1
+ ],
+ "MET-004 negative": [
+  5,
+  5
+ ],
+ "MET-007 faq": [
+  8,
+  8
+ ],
+ "MET-006 p90_latency_ms": 18.2,
+ "NFR-003 leaks": [],
+ "threshold": "2.0",
+ "min_coverage": "0.5"
+}
+G-01  positive  PASS   18 ms  
+G-02  positive  PASS   13 ms  
+G-03  positive  PASS   10 ms  
+G-04  positive  PASS   12 ms  
+G-05  positive  PASS   11 ms  
+G-06  positive  PASS   11 ms  
+G-07  positive  PASS   13 ms  
+G-08  positive  PASS   16 ms  
+G-09  conflict  PASS   15 ms  
+G-10  conflict  PASS   15 ms  
+G-11  conflict  PASS   15 ms  
+G-12  future    PASS   15 ms  
+G-51  negative  PASS   19 ms  
+G-52  negative  PASS   18 ms  
+G-53  negative  PASS   17 ms  
+G-54  negative  PASS   17 ms  
+G-55  negative  PASS   17 ms  
+RC-2: PASS

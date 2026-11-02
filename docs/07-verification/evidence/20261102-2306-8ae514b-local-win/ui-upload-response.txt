@@ -1,0 +1,54 @@
+$ curl -X POST /api/documents (5 sample + 4 bad files)
+{
+    "items": [
+        {
+            "filename": "Noi_quy_lao_dong_2025.pdf",
+            "status": "ready",
+            "document_id": 1
+        },
+        {
+            "filename": "Quy_che_chi_tieu_noi_bo_2025.pdf",
+            "status": "ready",
+            "document_id": 2
+        },
+        {
+            "filename": "Quyet_dinh_sua_doi_nghi_phep_2027.pdf",
+            "status": "ready",
+            "document_id": 3
+        },
+        {
+            "filename": "Quyet_dinh_sua_doi_phu_cap_luu_tru_2026.pdf",
+            "status": "ready",
+            "document_id": 4
+        },
+        {
+            "filename": "Thong_bao_nop_chung_tu_2026.pdf",
+            "status": "ready",
+            "document_id": 5
+        },
+        {
+            "filename": "hong.pdf",
+            "status": "failed",
+            "error_code": "corrupted",
+            "message": "Tệp bị hỏng"
+        },
+        {
+            "filename": "khong_phai_pdf.pdf",
+            "status": "failed",
+            "error_code": "not_pdf",
+            "message": "Không phải tệp PDF hợp lệ"
+        },
+        {
+            "filename": "mat_khau.pdf",
+            "status": "failed",
+            "error_code": "encrypted_pdf",
+            "message": "Tệp có mật khẩu"
+        },
+        {
+            "filename": "scan.pdf",
+            "status": "failed",
+            "error_code": "no_text_layer",
+            "message": "PDF dạng ảnh chưa được hỗ trợ"
+        }
+    ]
+}

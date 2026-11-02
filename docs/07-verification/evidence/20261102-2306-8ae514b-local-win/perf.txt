@@ -1,0 +1,1 @@
+TC-026 NFR-002: 20-page PDF (60618 bytes) -> ready in 0.13 s (threshold 60 s) => PASS

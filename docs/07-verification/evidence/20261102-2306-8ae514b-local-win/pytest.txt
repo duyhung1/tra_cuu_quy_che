@@ -1,0 +1,63 @@
+$ .venv/Scripts/python -m pytest -v  (commit 8ae514b)
+============================= test session starts =============================
+platform win32 -- Python 3.13.9, pytest-9.2.0, pluggy-1.7.0 -- D:\tra_cuu_quy_che\.venv\Scripts\python.exe
+rootdir: D:\tra_cuu_quy_che
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.16.0
+collecting ... collected 46 items
+
+tests/integration/test_api.py::test_healthz PASSED                       [  2%]
+tests/integration/test_api.py::test_no_documents_then_upload_then_list PASSED [  4%]
+tests/integration/test_api.py::test_eleven_files_is_400 PASSED           [  6%]
+tests/integration/test_api.py::test_invalid_question_is_422[] PASSED     [  8%]
+tests/integration/test_api.py::test_invalid_question_is_422[   ] PASSED  [ 10%]
+tests/integration/test_api.py::test_invalid_question_is_422[q2] PASSED   [ 13%]
+tests/integration/test_api.py::test_ask_returns_sources_and_one_usage_record_without_text PASSED [ 15%]
+tests/integration/test_api.py::test_answerer_failure_is_503_and_logged_as_error PASSED [ 17%]
+tests/integration/test_api.py::test_usage_log_failure_still_answers PASSED [ 19%]
+tests/integration/test_api.py::test_ten_concurrent_questions PASSED      [ 21%]
+tests/integration/test_api.py::test_ui_is_served PASSED                  [ 23%]
+tests/integration/test_api.py::test_timeout_is_503_and_logged PASSED     [ 26%]
+tests/integration/test_api.py::test_rebuild_during_questions_never_fails PASSED [ 28%]
+tests/integration/test_api.py::test_store_releases_the_database_file PASSED [ 30%]
+tests/unit/test_answerer.py::test_positive_answer_has_reference_and_full_source PASSED [ 32%]
+tests/unit/test_answerer.py::test_conflict_names_replaced_document_and_old_value PASSED [ 34%]
+tests/unit/test_answerer.py::test_future_rule_is_announced_not_applied PASSED [ 36%]
+tests/unit/test_answerer.py::test_not_found_has_fixed_sentence_and_no_sources PASSED [ 39%]
+tests/unit/test_answerer.py::test_injected_instruction_never_answers PASSED [ 41%]
+tests/unit/test_import_rules.py::test_only_wiring_imports_adapters PASSED [ 43%]
+tests/unit/test_import_rules.py::test_domain_and_services_do_not_import_frameworks PASSED [ 45%]
+tests/unit/test_ingest.py::test_three_valid_documents_become_ready PASSED [ 47%]
+tests/unit/test_ingest.py::test_bad_files_get_one_reason_each_and_do_not_block_valid_ones PASSED [ 50%]
+tests/unit/test_ingest.py::test_eleven_files_rejected_as_a_batch PASSED  [ 52%]
+tests/unit/test_ingest.py::test_duplicate_too_large_too_many_pages PASSED [ 54%]
+tests/unit/test_ingest.py::test_collection_full PASSED                   [ 56%]
+tests/unit/test_ingest.py::test_injected_instruction_is_dropped PASSED   [ 58%]
+tests/unit/test_legal_parser.py::test_units_per_clause_with_heading_and_chapter PASSED [ 60%]
+tests/unit/test_legal_parser.py::test_metadata_number_title_effective_and_signed PASSED [ 63%]
+tests/unit/test_legal_parser.py::test_effective_from_signing_uses_signed_date PASSED [ 65%]
+tests/unit/test_legal_parser.py::test_amendment_limited_to_replaced_clause PASSED [ 67%]
+tests/unit/test_legal_parser.py::test_instruction_sentence_is_filtered PASSED [ 69%]
+tests/unit/test_legal_parser.py::test_unstructured_document_becomes_page_units PASSED [ 71%]
+tests/unit/test_resolver.py::test_a_clause_superseded_by_in_force_amendment PASSED [ 73%]
+tests/unit/test_resolver.py::test_b_other_clause_not_superseded PASSED   [ 76%]
+tests/unit/test_resolver.py::test_c_future_amendment_never_primary PASSED [ 78%]
+tests/unit/test_resolver.py::test_d_chain_takes_newest_in_force_and_lists_all_replaced PASSED [ 80%]
+tests/unit/test_resolver.py::test_e_unknown_date_never_supersedes PASSED [ 82%]
+tests/unit/test_resolver.py::test_f_only_future_document PASSED          [ 84%]
+tests/unit/test_resolver.py::test_below_threshold_is_not_found PASSED    [ 86%]
+tests/unit/test_resolver.py::test_no_hits_is_not_found PASSED            [ 89%]
+tests/unit/test_text.py::test_tokenize_keeps_diacritics_drops_stopwords_and_adds_bigrams PASSED [ 91%]
+tests/unit/test_text.py::test_normalize_dashes_and_nfc PASSED            [ 93%]
+tests/unit/test_text.py::test_sentences_do_not_split_numbers PASSED      [ 95%]
+tests/unit/test_text.py::test_content_terms PASSED                       [ 97%]
+tests/unit/test_text.py::test_every_error_has_vietnamese_message_and_status PASSED [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\tra_cuu_quy_che\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 46 passed, 1 warning in 8.06s ========================

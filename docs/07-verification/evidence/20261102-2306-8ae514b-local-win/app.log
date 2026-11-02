@@ -1,0 +1,22 @@
+{"level": "INFO", "event": "ingest_done", "document_id": 1, "pages": 2, "units": 6, "filtered": 0, "processing_ms": 31}
+{"level": "INFO", "event": "ingest_done", "document_id": 2, "pages": 2, "units": 7, "filtered": 0, "processing_ms": 32}
+{"level": "INFO", "event": "ingest_done", "document_id": 3, "pages": 1, "units": 2, "filtered": 0, "processing_ms": 16}
+{"level": "INFO", "event": "ingest_done", "document_id": 4, "pages": 1, "units": 3, "filtered": 0, "processing_ms": 23}
+{"level": "INFO", "event": "ingest_done", "document_id": 5, "pages": 1, "units": 2, "filtered": 1, "processing_ms": 17}
+{"level": "INFO", "event": "ask_done", "latency_ms": 18, "cited_count": 2, "found": true}
+{"level": "INFO", "event": "ask_done", "latency_ms": 13, "cited_count": 1, "found": true}
+{"level": "INFO", "event": "ask_done", "latency_ms": 10, "cited_count": 2, "found": true}
+{"level": "INFO", "event": "ask_done", "latency_ms": 12, "cited_count": 1, "found": true}
+{"level": "INFO", "event": "ask_done", "latency_ms": 11, "cited_count": 1, "found": true}
+{"level": "INFO", "event": "ask_done", "latency_ms": 11, "cited_count": 2, "found": true}
+{"level": "INFO", "event": "ask_done", "latency_ms": 13, "cited_count": 2, "found": true}
+{"level": "INFO", "event": "ask_done", "latency_ms": 16, "cited_count": 2, "found": true}
+{"level": "INFO", "event": "ask_done", "latency_ms": 15, "cited_count": 3, "found": true}
+{"level": "INFO", "event": "ask_done", "latency_ms": 15, "cited_count": 3, "found": true}
+{"level": "INFO", "event": "ask_done", "latency_ms": 15, "cited_count": 3, "found": true}
+{"level": "INFO", "event": "ask_done", "latency_ms": 15, "cited_count": 3, "found": true}
+{"level": "INFO", "event": "ask_done", "latency_ms": 19, "cited_count": 0, "found": false}
+{"level": "INFO", "event": "ask_done", "latency_ms": 18, "cited_count": 0, "found": false}
+{"level": "INFO", "event": "ask_done", "latency_ms": 17, "cited_count": 0, "found": false}
+{"level": "INFO", "event": "ask_done", "latency_ms": 17, "cited_count": 0, "found": false}
+{"level": "INFO", "event": "ask_done", "latency_ms": 17, "cited_count": 0, "found": false}

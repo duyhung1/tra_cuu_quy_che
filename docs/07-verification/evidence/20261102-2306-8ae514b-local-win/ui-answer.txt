@@ -1,0 +1,19 @@
+UI snapshot (innerText of #view-ask) after asking two questions in the browser, http://127.0.0.1:8765, TCQC_TODAY=2026-11-02.
+Screenshot: ui-answer.jpg
+
+5 văn bản đang dùng
+Phụ cấp lưu trú khi đi công tác hiện nay là bao nhiêu một ngày?
+1. Người được cử đi công tác được hưởng phụ cấp lưu trú 450.000 đồng/ngày. [1]
+2. Đi công tác tại các tỉnh miền núi, hải đảo được hưởng phụ cấp lưu trú 500.000 đồng/ngày. [2]
+Quy định này thay thế Điều 5, khoản 1 của QUY CHẾ CHI TIÊU NỘI BỘ số 08/2025/QC-SM (trước đây: «1. Người được cử đi công tác được hưởng phụ cấp lưu trú 300.000 đồng/ngày.») [3]
+CĂN CỨ
+[1] Điều 1, khoản 1 — QUYẾT ĐỊNH Về việc sửa đổi mức phụ cấp lưu trú · Số 02/2026/QĐ-SM · hiệu lực 01/07/2026 · trang 1
+[2] Điều 1, khoản 2 — QUYẾT ĐỊNH Về việc sửa đổi mức phụ cấp lưu trú · Số 02/2026/QĐ-SM · hiệu lực 01/07/2026 · trang 1
+[3] Điều 5, khoản 1 — QUY CHẾ CHI TIÊU NỘI BỘ · Số 08/2025/QC-SM · hiệu lực 01/01/2025 · trang 1
+Câu trả lời do hệ thống tự động tạo — hãy đối chiếu Điều khoản gốc · Trả lời trong 0.0 giây
+Công ty thưởng Tết bao nhiêu tháng lương?
+Không tìm thấy quy định này trong các văn bản đã tải lên.
+
+Locked state (ui-locked.jpg, empty store): locked=true, inputDisabled=true, sendDisabled=true,
+text "Chưa có văn bản nào Sẵn sàng … Sang trang Văn bản".
+Too many files (ui-too-many.jpg): upload(11 files) -> "Mỗi lần chỉ tải tối đa 10 tệp. Bạn đã chọn 11 tệp." (no request sent).

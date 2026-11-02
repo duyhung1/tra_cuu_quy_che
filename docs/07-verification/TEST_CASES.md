@@ -2,7 +2,7 @@
 
 | Mục | Giá trị |
 |---|---|
-| ID | TCQC-TC, version 0.1 |
+| ID | TCQC-TC, version 1.0 |
 | Owner | Phùng Duy Hùng (PO) |
 | Tested commit / environment | ghi trong `RTM.md` (run-id) |
 | Date | 2026-11-02 |
