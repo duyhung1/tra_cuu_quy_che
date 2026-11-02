@@ -3,8 +3,8 @@
 | Mục | Giá trị |
 |---|---|
 | Document ID | TCQC-SAD |
-| Version | 0.1 |
-| Status | In review |
+| Version | 0.2 |
+| Status | In review (sửa theo sad-audit vòng 1) |
 | Owner / Approver | Phùng Duy Hùng (PO, kiêm Tech Lead) |
 | Author | AI agent (Claude Code) |
 | Date | 2026-11-02 |
@@ -167,7 +167,7 @@ Sơ đồ: [diagrams/sequence-ask.drawio](diagrams/sequence-ask.drawio).
    - điểm < ngưỡng hoặc không đủ từ trùng → câu FR-011, không có căn cứ;
    - ngược lại → câu trả lời là nội dung Khoản, kèm [1] và các chú thích thay thế / sắp hiệu lực [2]…
 6. Ghi ASK_LOG (latency, status, cited_count). Nếu ghi lỗi thì chỉ log mã lỗi và vẫn trả lời (FR-017).
-7. Trả `{answer, latency_ms, sources[]}`.
+7. Trả `{answer, found, latency_ms, sources[]}`.
 
 **Lỗi:** exception hoặc timeout trong bước 3–5 → ghi ASK_LOG status = error → HTTP 503 `ai_unavailable`. UI giữ câu hỏi và hiện "Hỏi lại" (FR-015).
 
@@ -176,6 +176,8 @@ Sơ đồ: [diagrams/sequence-ask.drawio](diagrams/sequence-ask.drawio).
 Văn bản: `(upload) → processing → ready | failed`. Không có chuyển trạng thái nào khác trong phạm vi này; gỡ văn bản là Deferred. Trạng thái `processing` chỉ tồn tại trong thời gian của một yêu cầu tải lên (ADR-004).
 
 ### 3.5 Interface view
+
+**Khác với PRD IF-01:** PRD ghi IF-01 trả trạng thái "Đang xử lý". Vì ADR-004 xử lý đồng bộ, API-01 trả luôn trạng thái cuối (`ready` / `failed`). Trạng thái "Đang xử lý" chỉ hiện trên UI trong lúc chờ phản hồi. Hành vi người dùng thấy không đổi (FR-004, FR-018 vẫn đạt). Ghi thành OQ-008 để PO duyệt tại cổng Design.
 
 Hợp đồng API và mã lỗi: [blueprint.md](blueprint.md) §5. Không có giao diện với hệ thống bên ngoài (SRC-006 D4).
 
@@ -192,6 +194,12 @@ Hợp đồng API và mã lỗi: [blueprint.md](blueprint.md) §5. Không có gi
 | Lộ nội dung | §4.2 | BR-011 |
 
 Không có xác thực hay phân quyền (OQ-002, NFR-008). Không có bí mật nào trong cấu hình.
+
+**Mã hóa (NFR-009):** không áp dụng trong capstone vì dữ liệu giả lập (CON-02) và không có kênh ra ngoài. Khi dùng thật: HTTPS ở reverse proxy và mã hóa ổ đĩa chứa `data/`.
+
+**Giới hạn tần suất và retry:** không giới hạn tần suất trong mạng nội bộ ở giai đoạn này. Không có retry phía máy chủ; người dùng bấm "Hỏi lại" (FR-015).
+
+**Lưu giữ dữ liệu:** văn bản và đơn vị được lưu tới khi gỡ thủ công (gỡ văn bản là Deferred). ASK_LOG được giữ 90 ngày; quản trị viên xóa định kỳ, không có tác vụ tự động trong phạm vi này.
 
 ### 4.2 Observability & data protection
 
@@ -255,4 +263,6 @@ Không có xác thực hay phân quyền (OQ-002, NFR-008). Không có bí mật
 
 | ID | Câu hỏi | Owner | Cần trước |
 |---|---|---|---|
-| — | Không có câu hỏi mở mới ở chặng Design | — | — |
+| OQ-008 | PO chấp nhận API-01 trả trạng thái cuối thay cho "Đang xử lý" của PRD IF-01 (ADR-004)? | PO | Cổng Design 2026-11-02 |
+
+**Self-check (§6 của prompt):** driver nêu trước thiết kế (§1.1; ba driver hàng đầu: căn cứ đúng, không nội dung ra ngoài, hoàn thành trong ngày); mọi component có FR/NFR và interface (§2.2); hai luồng có từng bước và hành vi lỗi (§3.2, §3.3); bảo mật, dữ liệu, độ tin cậy, quan sát (§4); 4 ADR (≥ MINIMUM_ADRS). Điểm chính thức: [sad-audit.md](sad-audit.md).

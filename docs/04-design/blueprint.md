@@ -3,8 +3,8 @@
 | Mục | Giá trị |
 |---|---|
 | Document ID | TCQC-SDD |
-| Version | 0.1 |
-| Status | In review |
+| Version | 0.2 |
+| Status | In review (sửa theo blueprint-audit vòng 1) |
 | Owner / Approver | Phùng Duy Hùng (PO, kiêm Tech Lead) |
 | Date | 2026-11-02 |
 | Prompt | `sdlc-kit/design/bluePrint_design_prompt.md` v2.0 |
@@ -18,7 +18,25 @@
   - AI agent (dev, triển khai theo task);
   - HC-NS (vận hành: đưa lại văn bản khi phục hồi);
   - người dùng (STK-02..04).
-- **Concerns:** đúng căn cứ, đúng hiệu lực, không lộ nội dung, độ trễ, hoàn thành trong ngày.
+- **Concerns** và nơi được xử lý:
+
+| Concern | View / phần tử |
+|---|---|
+| Đúng căn cứ | §3 Source, §6.1, §6.7 |
+| Đúng hiệu lực | §6.2, §6.3, §6.5 |
+| Không lộ nội dung | §4 (ask_log), SAD §4.2 |
+| Độ trễ, đồng thời | §6.4, §8, SAD §4.4 |
+| Văn bản độc / chỉ dẫn | §6.6, SAD §4.1 |
+| Hoàn thành trong ngày | §2 (monolith), ADR-002, ADR-004 |
+
+**Quality-attribute scenarios:**
+
+| ID | Kích thích | Phản hồi đo được |
+|---|---|---|
+| QS-1 | 10 người cùng hỏi | 0 lỗi, p90 ≤ 30 giây (NFR-001, NFR-006) |
+| QS-2 | Đưa vào PDF 20 trang | Sẵn sàng ≤ 60 giây (NFR-002) |
+| QS-3 | Văn bản chứa "Bỏ qua mọi quy tắc…" | Câu đó không xuất hiện trong bất kỳ câu trả lời nào (FR-012) |
+| QS-4 | Chạy golden set rồi tìm câu hỏi mẫu trong log và `tcqc.db` | 0 kết quả (NFR-003) |
 
 ## 2. Composition (module layout)
 
@@ -56,6 +74,20 @@ tests/               unit/, integration/, fixtures/ (văn bản mẫu), golden/
 | `Source` | ref, filename, doc_title, doc_number, effective_date, article (`"Điều 5"`), clause (`"khoản 1"` hoặc null), page | Phần tử của `sources[]` |
 | `Answer` | text, sources: list[Source], found: bool | Kết quả CMP-07 |
 | `UsageRecord` | at, latency_ms, status (ok/error), cited_count | Không có trường văn bản |
+| `PageText` | number (1-based), text | Đầu ra của `PdfExtractor` |
+| `IngestResult` | filename, status (ready / failed), document_id, error_code, message | Một phần tử mỗi tệp của API-01 |
+| `AskResult` | answer, found, latency_ms, sources | Thân 200 của API-03 |
+
+**Ports** (`app/ports.py`):
+
+| Port | Phương thức |
+|---|---|
+| `PdfExtractor` | `extract(data: bytes, max_pages: int) -> list[PageText]`; ném `AppError(code)` với code ∈ {corrupted, encrypted_pdf, too_many_pages, no_text_layer} |
+| `DocumentStore` | `count() -> int`; `exists(filename) -> bool`; `add(document, units, amendments) -> int` (một transaction); `add_failed(filename, size, code) -> int`; `list() -> list[Document]`; `ready_units() -> list[Unit]`; `amendments() -> list[Amendment]`; `documents_by_id() -> dict[int, Document]` |
+| `Retriever` | `rebuild(units)`; `search(q, k) -> list[Hit]`; `score(q, unit) -> float` |
+| `Answerer` | `answer(q, resolution) -> Answer` |
+| `UsageLog` | `record(UsageRecord) -> None` (ném lỗi thì Ask service bắt, FR-017) |
+| `Clock` | `today() -> date` (cấu hình `TCQC_TODAY` để kiểm thử) |
 
 ## 4. Information view (SQLite, ADR-002)
 
@@ -99,6 +131,8 @@ Không có bảng hay cột nào lưu câu hỏi hoặc câu trả lời (NFR-00
 | API-03 | `POST /api/ask` | `{question}` | 200 `{answer, found, latency_ms, sources:[Source]}` | 422 `question_invalid`, 409 `no_documents`, 503 `ai_unavailable` |
 | API-04 | `GET /healthz` | — | 200 `{status:"ok"}` | — |
 
+**Câu hỏi:** cắt khoảng trắng hai đầu trước khi kiểm độ dài 1–2000 ký tự. Thân lỗi của mọi phản hồi 4xx/5xx: `{"code": "<code>", "message": "<thông điệp tiếng Việt>"}`.
+
 Mã lỗi và thông điệp (một nguồn duy nhất: `app/domain/errors.py`, giao diện đọc `message` từ API):
 
 | code | HTTP | Thông điệp |
@@ -119,6 +153,13 @@ Mã lỗi và thông điệp (một nguồn duy nhất: `app/domain/errors.py`, 
 
 ## 6. Algorithm view
 
+### 6.0 Quy ước chung cho §6
+
+- Mọi biểu thức chính quy chạy trên văn bản đã chuẩn hóa NFC, với `re.IGNORECASE`.
+- Trước khi so khớp, các loại gạch ngang (U+00AD, U+2010, U+2011, U+2013) được thay bằng `-`.
+- **"Câu":** đoạn văn bản kết thúc bằng `.`, `!`, `?`, `;` hoặc xuống dòng.
+- Hằng số `DOC_NO = (\d+/[0-9A-Za-zĐđ/\-]+)`, dùng chung cho §6.2 và §6.3.
+
 ### 6.1 Cấu trúc (Chương / Điều / Khoản)
 
 - **Dòng Điều:** `^Điều\s+(\d+[a-z]?)\s*[.:]\s*(.*)$`. Bắt buộc có `.` hoặc `:` sau số, để câu tham chiếu "theo Điều 5 của …" không bị nhận là tiêu đề.
@@ -129,42 +170,83 @@ Mã lỗi và thông điệp (một nguồn duy nhất: `app/domain/errors.py`, 
 
 ### 6.2 Metadata
 
-- **Số hiệu:** `Số\s*[:.]?\s*(\d+/[0-9A-Za-zĐđ/\-]+)` trên trang 1, sau khi chuẩn hóa các loại gạch ngang (soft hyphen, en dash) thành `-`.
-- **Tên văn bản:** dòng VIẾT HOA đầu tiên bắt đầu bằng QUY CHẾ / QUYẾT ĐỊNH / NỘI QUY / QUY ĐỊNH / THÔNG BÁO. Nếu dòng chỉ có tên loại thì ghép thêm dòng sau.
-- **Ngày ký:** `ngày (\d{1,2}) tháng (\d{1,2}) năm (\d{4})` ở trang 1.
-- **Ngày hiệu lực:**
-  - lấy từ `hiệu lực (thi hành)? (kể)? từ ngày dd/mm/yyyy`;
-  - ghi "hiệu lực kể từ ngày ký" thì bằng ngày ký (BRU-002);
-  - không có thì NULL; văn bản vẫn Sẵn sàng và cột hiện "—".
+- **Số hiệu:** `Số\s*[:.]?\s*` + `DOC_NO`, lần xuất hiện đầu tiên trên trang 1.
+- **Tên văn bản:** dòng VIẾT HOA đầu tiên trên trang 1 bắt đầu bằng QUY CHẾ / QUYẾT ĐỊNH / NỘI QUY / QUY ĐỊNH / THÔNG BÁO. Nếu dòng chỉ có tên loại thì ghép thêm dòng ngay sau (tối đa 200 ký tự).
+- **Ngày ký:** `ngày\s+(\d{1,2})\s+tháng\s+(\d{1,2})\s+năm\s+(\d{4})`, lần đầu tiên trên trang 1.
+- **Ngày hiệu lực:** lần xuất hiện đầu tiên trong toàn văn bản của một trong các mẫu sau, theo thứ tự ưu tiên:
+  1. `hiệu lực(?:\s+thi hành)?(?:\s+kể)?\s+từ\s+ngày\s+(\d{1,2})[/.\-](\d{1,2})[/.\-](\d{4})`;
+  2. `hiệu lực(?:\s+thi hành)?(?:\s+kể)?\s+từ\s+ngày\s+(\d{1,2})\s+tháng\s+(\d{1,2})\s+năm\s+(\d{4})`;
+  3. `hiệu lực(?:\s+thi hành)?(?:\s+kể)?\s+từ\s+ngày\s+ký` → ngày hiệu lực = ngày ký (BRU-002).
+  Không mẫu nào khớp → `effective_date = NULL`.
+- **Ngày dùng để so sánh** (`eff(D)`):
+  - `effective_date` nếu có;
+  - nếu không, `signed_date`;
+  - nếu cả hai đều NULL, `eff(D) = −∞` và văn bản bị đánh dấu "không rõ ngày hiệu lực". Văn bản loại này coi như đã hiệu lực nhưng **không bao giờ thay thế** văn bản khác (A3).
 
 ### 6.3 Liên kết sửa đổi
 
-Trong mỗi unit, tìm:
-
-- `(sửa đổi|thay thế)\s+(khoản\s+(\d+)\s+)?Điều\s+(\d+[a-z]?)` kèm số hiệu văn bản đích `số\s+(\d+/[\w/\-Đđ]+)` trong cùng Điều. Nếu tiêu đề Điều là "Sửa đổi Điều N …" thì các Khoản của Điều đó thay các Khoản cùng số của Điều đích.
-- Câu "thay thế khoản k Điều N" giới hạn đích vào đúng Khoản k.
-- Mỗi liên kết được ghi vào `amendments`.
+1. **Điều sửa đổi:** tiêu đề Điều khớp `(?:sửa đổi(?:,\s*bổ sung)?|thay thế)\s+Điều\s+(\d+[a-z]?)`. Văn bản đích là `DOC_NO` đầu tiên sau cụm `số` trong tiêu đề Điều; nếu tiêu đề không có thì tìm trong thân Điều.
+2. **Khoản được thay rõ ràng:** trong toàn văn bản sửa đổi, mọi lần khớp `thay thế\s+khoản\s+(\d+)\s+Điều\s+(\d+[a-z]?)` (kèm `DOC_NO` của cùng câu, hoặc của điều sửa đổi tương ứng) tạo tập `K(N)` các khoản bị thay của Điều N.
+3. **Sinh dòng `amendments`:** với mỗi Khoản `i` của Điều sửa đổi nhắm tới Điều N:
+   - nếu `K(N)` khác rỗng: chỉ khi `i ∈ K(N)` mới tạo dòng (source = Khoản i, target = (doc, N, i)). Các Khoản khác là quy định mới, không thay gì;
+   - nếu `K(N)` rỗng: tạo dòng target = (doc, N, i).
+   - Điều sửa đổi không có Khoản: một dòng target = (doc, N, NULL), nghĩa là thay cả Điều.
+4. Một đích có thể có nhiều dòng `amendments` (nhiều văn bản sửa đổi, hoặc sửa đổi nối chuỗi).
 
 ### 6.4 Truy xuất (CMP-05, ADR-003)
 
-- **Tokenize:** NFC, lowercase, tách theo ký tự không phải chữ/số, giữ dấu; bỏ stop-words tiếng Việt (danh sách ngắn trong `text.py`: "là", "của", "và", "thì", "bao", "nhiêu", "được", "có", "không", …).
-- **Thêm bigram** để cụm như "phụ cấp", "nghỉ phép" có trọng số.
-- **BM25** (k1 = 1.5, b = 0.75) trên các unit của văn bản Sẵn sàng; trả top-k = 8.
+- **Tokenize:** NFC, lowercase, tách theo ký tự không phải chữ/số, giữ dấu.
+- **Stop-word:** danh sách đóng trong `app/domain/text.py`. Đây là nguồn duy nhất; danh sách có thể được tinh chỉnh theo golden set và mọi thay đổi ghi vào TEST_REPORT. Danh sách khởi đầu: là, của, và, thì, mà, bao, nhiêu, được, có, không, cho, các, những, một, này, đó, khi, nào, gì, ai, tôi, bạn, hiện, nay, theo, với, về, trong, từ, đến, ở, thế, sao.
+- **Bigram:** tạo từ dãy token **trước** khi bỏ stop-word, rồi bỏ bigram chứa stop-word. Unigram sau khi bỏ stop-word.
+- **BM25:**
+  - `idf(t) = ln(1 + (N − df + 0.5) / (df + 0.5))`;
+  - `score = Σ idf(t) · tf·(k1+1) / (tf + k1·(1 − b + b·len/avglen))`, với k1 = 1.5, b = 0.75;
+  - tính trên các unit của văn bản Sẵn sàng; trả top-k = 8.
 
-### 6.5 Luật hiệu lực (CMP-06)
+### 6.5 Luật hiệu lực (CMP-06) — `resolve(question, hits, today)`
 
-Cho hit tốt nhất `h`, đơn vị `u` của văn bản `D`, `today` lấy từ Clock:
+**Định nghĩa:**
+- `in_force(D) ⇔ eff(D) ≤ today` (§6.2).
+- `score(q, u)` là điểm BM25 của câu hỏi với **bất kỳ** unit `u`, không chỉ các unit trong top-k (A7).
+- `targets(u)`: các unit đích của các dòng `amendments` có source = `u`. Đích có `clause_no = NULL` ứng với mọi Khoản của Điều đó.
+- `amenders(t)`: các unit nguồn có dòng `amendments` trỏ tới `t`, trỏ tới cả Điều của `t`, hoặc trỏ tới đúng `(doc_number, article_no, NULL)`.
 
-1. Tìm `A` = các amendment trỏ tới (`D.doc_number`, `u.article_no`, `u.clause_no` hoặc NULL).
-2. Với mỗi `a ∈ A` có văn bản nguồn `D'`:
-   - `D'.effective_date ≤ today` và `D'.effective_date > D.effective_date` → **primary = unit nguồn của `a`** khớp câu hỏi nhất; `u` vào `superseded`;
-   - `D'.effective_date > today` → `u` vẫn là primary; `(unit nguồn, D'.effective_date)` vào `upcoming` (BRU-003).
-3. Nếu `h` là unit của một văn bản sửa đổi: primary = `h`, `superseded` = các unit đích của nó (nếu văn bản đã hiệu lực).
-4. Xung đột không có liên kết rõ: hai hit đầu thuộc hai văn bản khác nhau, cùng `article_title` (sau khi chuẩn hóa) và điểm chênh < 20 % → chọn văn bản có `effective_date` muộn hơn (chỉ xét các văn bản đã hiệu lực), văn bản còn lại vào `superseded` (BRU-001).
+**Thuật toán** (chạy đúng thứ tự, dừng ở bước có ghi "dừng"):
+
+1. **Lọc:** `current = [h ∈ hits | in_force(doc(h))]`, `future = [h ∈ hits | not in_force(doc(h))]`.
+2. **Gốc:**
+   - Nếu `current` rỗng: kết quả `primary = None`, `upcoming = future` → câu trả lời "chưa có quy định đang áp dụng" kèm danh sách sắp hiệu lực (§6.7). **Dừng.**
+   - Nếu không: `h0 = current[0]` (điểm cao nhất). `found_score = score(h0)` dùng cho ngưỡng §6.7 (A8: ngưỡng tính trên hit gốc, không phải sau khi đổi).
+3. **Về gốc của sửa đổi:**
+   - Nếu `targets(h0.unit)` khác rỗng (h0 là một Khoản sửa đổi): `base = argmax_{t ∈ targets(h0.unit)} score(q, t)`.
+   - Nếu không: `base = h0.unit`.
+4. **Chọn bản đang áp dụng** (A1, A2): `applied = base`, `superseded = []`. Lặp tối đa 5 lần:
+   - `cands = [a ∈ amenders(applied) | in_force(doc(a)) và eff(doc(a)) > eff(doc(applied))]`.
+   - Nếu `cands` rỗng thì thôi lặp.
+   - Nếu không: `newest` = phần tử có `eff` lớn nhất (bằng nhau thì xét `signed_date` muộn hơn, rồi `id` lớn hơn). Đưa `applied` vào `superseded`, rồi `applied = newest`.
+   - Vòng lặp xử lý được sửa đổi nối chuỗi (A → B → C). Các văn bản cùng sửa một đích đều bị so sánh, chỉ giữ văn bản hiệu lực muộn nhất.
+5. **Sắp có hiệu lực:**
+   - `upcoming = [a ∈ amenders(applied) ∪ amenders(base) | not in_force(doc(a))]`, sắp theo `eff` tăng dần;
+   - cộng thêm `h ∈ future` có `article_title` (đã chuẩn hóa) trùng với của `applied` mà không có liên kết.
+   - Không unit nào trong `upcoming` được làm `primary` (BRU-003, FR-010).
+6. **Xung đột không có liên kết** (BRU-001):
+   - Với `h ∈ current`, `h` thuộc văn bản khác `applied`, `article_title` trùng và `score(h) ≥ 0.8 × found_score`:
+     - nếu `eff(doc(h)) > eff(doc(applied))` và `doc(h)` không phải "không rõ ngày": `superseded += [applied]`, `applied = h.unit`;
+     - nếu không: `superseded += [h.unit]`.
+   - Mỗi văn bản chỉ xét một lần.
+7. **Kết quả:** `Resolution(primary = applied, superseded, upcoming, found_score, matched_terms(h0))`.
+
+**Test bắt buộc** (TASK-007), dựng từ văn bản mẫu:
+- (a) Khoản 1 Điều 5 bị Quyết định 02/2026 thay;
+- (b) Khoản 2 Điều 5 không bị thay;
+- (c) hit tốt nhất là Khoản của văn bản sửa đổi chưa hiệu lực → primary vẫn là Khoản cũ, upcoming có văn bản mới;
+- (d) chuỗi hai sửa đổi → lấy văn bản muộn nhất đang hiệu lực;
+- (e) văn bản không rõ ngày không thay văn bản khác;
+- (f) không có văn bản đang hiệu lực, chỉ có văn bản tương lai.
 
 ### 6.6 Lọc chỉ dẫn (FR-012)
 
-Câu chứa mẫu chỉ dẫn được loại khỏi unit lúc xử lý văn bản, và `documents.units_filtered` được tăng lên. Các mẫu:
+Mỗi **câu** (§6.0) chứa mẫu chỉ dẫn được loại khỏi unit lúc xử lý văn bản, và `documents.units_filtered` tăng theo số câu bị loại. Các mẫu:
 
 - `bỏ qua (mọi|các|tất cả)? ?(quy tắc|hướng dẫn|chỉ dẫn)`
 - `hãy trả lời`
@@ -175,7 +257,10 @@ Unit rỗng sau khi lọc thì bị bỏ.
 
 ### 6.7 Dựng câu trả lời (CMP-07, RuleBasedAnswerer)
 
-1. **Ngưỡng tìm thấy:** `score(primary) ≥ τ` (mặc định τ = 2.0) **và** ≥ 2 từ khóa nội dung của câu hỏi (không tính stop-word) có trong unit. Không đạt → `NOT_FOUND = "Không tìm thấy quy định này trong các văn bản đã tải lên."`, `sources = []`.
+1. **Ngưỡng tìm thấy:** `found_score ≥ τ` **và** ≥ 2 unigram nội dung của câu hỏi có trong unit `h0` (§6.5 bước 2). Cả hai tính trên hit gốc, không phải trên bản đã đổi.
+   - τ là cấu hình (`TCQC_THRESHOLD`), giá trị khởi đầu 2.0. Giá trị này được tinh chỉnh trên golden set ở chặng Test; giá trị cuối và lý do ghi vào TEST_REPORT.
+   - Không đạt → `NOT_FOUND = "Không tìm thấy quy định này trong các văn bản đã tải lên."`, `sources = []`.
+   - Trường hợp §6.5 bước 2 (`primary = None`): câu "Hiện chưa có quy định đang áp dụng." kèm các mục sắp có hiệu lực (bước 4 bên dưới), `found = true`.
 2. **Câu chính:** nội dung Khoản primary (bỏ tiêu đề Điều) + ` [1]`.
 3. **Nếu có `superseded`:** thêm "Quy định này thay thế {Điều k, khoản n} của {tên} số {số hiệu} (trước đây: «{nội dung}») [2]".
 4. **Nếu có `upcoming`:** thêm "Lưu ý: {Điều …} của {tên} số {số hiệu} sắp có hiệu lực từ {dd/mm/yyyy}: «{nội dung}» [3]".
@@ -191,6 +276,8 @@ Như SAD §3.4.
 |---|---|---|
 | Tra cứu `/` | Đầu trang: số văn bản đang dùng (liên kết sang Văn bản); luồng hỏi–đáp; khối Căn cứ (`<ol>` [n] Điều — tên · số hiệu · hiệu lực · trang); ô hỏi + bộ đếm x/2000 + nút Gửi; trạng thái bận + "Hỏi lại"; trạng thái khóa khi chưa có văn bản | `ask-input`, `ask-send`, `answer`, `sources`, `retry`, `locked` |
 | Văn bản `/#documents` | Vùng chọn tệp (giới hạn ghi rõ); danh sách lỗi theo tệp; bảng Tên · Số hiệu · Hiệu lực · Trang · Trạng thái; tự làm mới 3 giây khi có `processing` | `file-input`, `upload-errors`, `doc-table` |
+
+Khi `counts.processing > 0`, màn hình Tra cứu hiện banner "N văn bản đang xử lý, chưa được dùng để trả lời" (FR-005).
 
 Mọi chuỗi ở `web/vi.json` (NFR-007). Câu trả lời được chèn bằng `textContent`.
 
@@ -224,3 +311,17 @@ Như SAD §4.4. Một tiến trình, không cần GPU, không có mô hình họ
 | SAD §4 | NFR-002, NFR-004..006, NFR-008..010 |
 
 Tất cả FR-001..020 và NFR-001..010 đều có phần tử thiết kế. FR-017 nằm ở SAD §3.3 bước 6.
+
+## 11. Open questions và self-check
+
+| ID | Câu hỏi | Owner | Cần trước |
+|---|---|---|---|
+| OQ-008 | (SAD §3.5) API-01 trả trạng thái cuối thay cho "Đang xử lý" | PO | Cổng Design |
+
+**Self-check:**
+- mọi FR/NFR có phần tử thiết kế (§10);
+- thuật toán §6 được đặc tả đủ để viết test (danh sách test bắt buộc ở §6.5);
+- concern → view (§1);
+- QS-1..4.
+
+Điểm chính thức: [blueprint-audit.md](blueprint-audit.md).
