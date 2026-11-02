@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tra cứu quy chế</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="top">
+    <strong data-t="app"></strong>
+    <nav>
+      <a href="#ask" data-t="navAsk"></a>
+      <a href="#documents" data-t="navDocs"></a>
+    </nav>
+  </header>
+
+  <main id="view-ask" class="view">
+    <div class="bar"><a href="#documents" id="docs-in-use"></a></div>
+    <div id="processing" class="banner" hidden></div>
+    <section id="locked" data-testid="locked" class="empty" hidden>
+      <h2 data-t="lockedTitle"></h2>
+      <p data-t="lockedBody"></p>
+      <a class="btn" href="#documents" data-t="lockedCta"></a>
+    </section>
+    <section id="thread" aria-live="polite"></section>
+    <form id="ask-form" class="composer">
+      <textarea id="ask-input" data-testid="ask-input" rows="2" maxlength="2100"></textarea>
+      <button id="ask-send" data-testid="ask-send" class="btn" type="submit" data-t="send"></button>
+      <div class="meta"><span data-t="hint"></span><span id="counter"></span></div>
+    </form>
+  </main>
+
+  <main id="view-documents" class="view" hidden>
+    <section class="card">
+      <h2 data-t="uploadTitle"></h2>
+      <p class="muted" data-t="uploadHint"></p>
+      <input id="file-input" data-testid="file-input" type="file" accept="application/pdf,.pdf" multiple>
+      <div id="upload-status" class="muted"></div>
+      <div id="upload-errors" data-testid="upload-errors"></div>
+    </section>
+    <table id="doc-table" data-testid="doc-table">
+      <thead><tr><th data-t="colTitle"></th><th data-t="colNumber"></th><th data-t="colEffective"></th>
+        <th data-t="colPages"></th><th data-t="colStatus"></th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
