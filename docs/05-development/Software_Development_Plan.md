@@ -3,8 +3,8 @@
 | Mục | Giá trị |
 |---|---|
 | Document ID | TCQC-SDP |
-| Version | 0.1 |
-| Status | In review |
+| Version | 1.0 |
+| Status | Baselined — `plan-v1` (PO, 2026-11-02) |
 | Owner / Approver | Phùng Duy Hùng (PO, kiêm Tech Lead) |
 | Author | AI agent (Claude Code) |
 | Date | 2026-11-02 |
@@ -76,8 +76,8 @@
 | MS-4 | `verification-v1`, TEST_REPORT có GO/NO-GO | 2026-11-02 |
 
 - **Theo dõi tiến độ:** trạng thái task trong front-matter của task card và commit có mã task; README hiển thị trạng thái từng chặng.
-- **Rủi ro:** RSK-001, RSK-002, RSK-003, RSK-005 (BRD §4.10, PRD §6). Rủi ro kế hoạch:
-  - **RSK-006:** vượt thời gian trong ngày → ưu tiên P0; P1 (FR-010, FR-013, FR-017) có thể chuyển sang sau. Mọi phần chưa làm phải ghi trong TEST_REPORT.
+- **Rủi ro** (sổ rủi ro chính ở BRD §4.10; mọi rủi ro do PO làm owner, xem lại tại mỗi cổng): RSK-001, RSK-002, RSK-003, RSK-005 (BRD §4.10, PRD §6). Rủi ro kế hoạch:
+  - **RSK-006** (owner: PO; trigger: 23:30 mà chưa xong W2; mức: High): vượt thời gian trong ngày → ưu tiên P0; P1 (FR-010, FR-013, FR-017) có thể chuyển sang sau. Mọi phần chưa làm phải ghi trong TEST_REPORT.
 - **Change control:** tài liệu đã baseline bị hook chặn sửa (`.claude/baselined.txt`). Muốn thay đổi phải ghi change request trong `docs/05-development/change-requests.md`, PO duyệt, rồi gắn tag `*-v2`.
 
 ## 6. Technical support processes
@@ -103,6 +103,21 @@
 
 README (cách chạy), CLAUDE.md (luật cho agent), docs theo chặng. Bảo trì sau capstone: OQ-001 (đo baseline), RSK-004/005 (thay adapter trả lời thì đo lại).
 
-## 7. Self-check
+## 7. Tailoring
+
+SDP rút gọn so với cấu trúc §7.3 của prompt: một người, một ngày, dữ liệu giả lập (CON-01, CON-02). Các mục bị gộp:
+
+- Introduction, Assumptions → §1, BRD §4.10;
+- Risk tier → Medium (intake);
+- Acceptance/Transition → PRD §5.1, TEST_REPORT;
+- Compliance → không có (CON-02);
+- Approvals → tag baseline;
+- Appendices A–H → WBS, task card, audit.
+
+PO chấp nhận việc rút gọn này khi duyệt cổng.
+
+**Theo dõi:** KPI là số task `done` / 12 và số test xanh, báo tại mỗi cổng.
+
+## 8. Self-check
 
 Đã đối chiếu 22 mục của `DevPlan_ISO_24748_5_Checklist.xlsx`. Điểm chính thức: [sdp-audit.md](sdp-audit.md).

@@ -3,8 +3,8 @@
 | Mục | Giá trị |
 |---|---|
 | Document ID | TCQC-WBS |
-| Version | 0.1 |
-| Status | In review |
+| Version | 1.0 |
+| Status | Baselined — `plan-v1` |
 | Owner / Approver | Phùng Duy Hùng (PO) |
 | Date | 2026-11-02 |
 | Prompt | `sdlc-kit/development/TaskBreakdown_ISO_21511_Prompt.md` v2.0 |
