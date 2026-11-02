@@ -3,8 +3,8 @@
 | Mục | Giá trị |
 |---|---|
 | Document ID | TCQC-SAD |
-| Version | 0.2 |
-| Status | In review (sửa theo sad-audit vòng 1) |
+| Version | 1.0 |
+| Status | Baselined — `design-v1` (PO, 2026-11-02) |
 | Owner / Approver | Phùng Duy Hùng (PO, kiêm Tech Lead) |
 | Author | AI agent (Claude Code) |
 | Date | 2026-11-02 |
@@ -254,15 +254,15 @@ Không có xác thực hay phân quyền (OQ-002, NFR-008). Không có bí mật
 
 | ADR | Quyết định | Trạng thái |
 |---|---|---|
-| [ADR-001](adr/ADR-001-rule-based-answerer.md) | Câu trả lời do `RuleBasedAnswerer` trong tiến trình tạo ra, sau port `Answerer` | Đề xuất |
-| [ADR-002](adr/ADR-002-sqlite.md) | Lưu trữ bằng SQLite nhúng | Đề xuất |
-| [ADR-003](adr/ADR-003-bm25-clause-units.md) | Truy xuất BM25 trên đơn vị Khoản | Đề xuất |
-| [ADR-004](adr/ADR-004-sync-ingestion-static-ui.md) | Xử lý văn bản đồng bộ trong yêu cầu tải lên; giao diện HTML/JS tĩnh | Đề xuất |
+| [ADR-001](adr/ADR-001-rule-based-answerer.md) | Câu trả lời do `RuleBasedAnswerer` trong tiến trình tạo ra, sau port `Answerer` | Đã chấp nhận |
+| [ADR-002](adr/ADR-002-sqlite.md) | Lưu trữ bằng SQLite nhúng | Đã chấp nhận |
+| [ADR-003](adr/ADR-003-bm25-clause-units.md) | Truy xuất BM25 trên đơn vị Khoản | Đã chấp nhận |
+| [ADR-004](adr/ADR-004-sync-ingestion-static-ui.md) | Xử lý văn bản đồng bộ trong yêu cầu tải lên; giao diện HTML/JS tĩnh | Đã chấp nhận |
 
 ## 7. Open questions
 
 | ID | Câu hỏi | Owner | Cần trước |
 |---|---|---|---|
-| OQ-008 | PO chấp nhận API-01 trả trạng thái cuối thay cho "Đang xử lý" của PRD IF-01 (ADR-004)? | PO | Cổng Design 2026-11-02 |
+| OQ-008 | PO chấp nhận API-01 trả trạng thái cuối thay cho "Đang xử lý" của PRD IF-01 (ADR-004)? | PO | **Đã quyết 2026-11-02: chấp nhận** |
 
 **Self-check (§6 của prompt):** driver nêu trước thiết kế (§1.1; ba driver hàng đầu: căn cứ đúng, không nội dung ra ngoài, hoàn thành trong ngày); mọi component có FR/NFR và interface (§2.2); hai luồng có từng bước và hành vi lỗi (§3.2, §3.3); bảo mật, dữ liệu, độ tin cậy, quan sát (§4); 4 ADR (≥ MINIMUM_ADRS). Điểm chính thức: [sad-audit.md](sad-audit.md).

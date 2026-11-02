@@ -2,7 +2,7 @@
 
 | Mục | Giá trị |
 |---|---|
-| Trạng thái | Đề xuất (chờ PO duyệt cùng SAD) |
+| Trạng thái | Đã chấp nhận (PO, 2026-11-02, cùng `design-v1`) |
 | Ngày | 2026-11-02 |
 | Liên quan | NFR-002, FR-001, FR-002, FR-004, FR-018, NFR-007 |
 

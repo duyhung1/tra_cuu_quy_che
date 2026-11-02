@@ -2,7 +2,7 @@
 
 | Mục | Giá trị |
 |---|---|
-| Trạng thái | Đề xuất (chờ PO duyệt cùng SAD) |
+| Trạng thái | Đã chấp nhận (PO, 2026-11-02, cùng `design-v1`) |
 | Ngày | 2026-11-02 |
 | Liên quan | FR-007, FR-008, FR-011, FR-012, FR-019; BR-004..008; RSK-004, RSK-005 |
 

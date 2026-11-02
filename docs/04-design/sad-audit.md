@@ -58,3 +58,8 @@
 ## 4. Verdict
 
 **Gate ready** (0 Fail). Đề nghị sửa 3 Partial trước khi PO duyệt; auditor không phê duyệt — PO phê duyệt.
+
+
+## Quyết định tại cổng (2026-11-02)
+
+Các Partial #4, #8, #11 đã sửa ở SAD v0.2 (NFR-009, sơ đồ sequence, OQ-008; PO chấp nhận OQ-008). PO duyệt cổng Design, baseline `design-v1`.

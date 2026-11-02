@@ -3,12 +3,12 @@
 | Mục | Giá trị |
 |---|---|
 | Document ID | TCQC-SDD |
-| Version | 0.2 |
-| Status | In review (sửa theo blueprint-audit vòng 1) |
+| Version | 1.0 |
+| Status | Baselined — `design-v1` (PO, 2026-11-02) |
 | Owner / Approver | Phùng Duy Hùng (PO, kiêm Tech Lead) |
 | Date | 2026-11-02 |
 | Prompt | `sdlc-kit/design/bluePrint_design_prompt.md` v2.0 |
-| Đầu vào | SAD v0.1, PRD v1.0 (`analysis-v1`) |
+| Đầu vào | SAD v1.0, PRD v1.0 (`analysis-v1`) |
 
 ## 1. Subject, context, stakeholders
 
@@ -70,7 +70,7 @@ tests/               unit/, integration/, fixtures/ (văn bản mẫu), golden/
 |---|---|---|
 | `Unit` | id, document_id, chapter, article_no, article_title, clause_no (0 = cả Điều), page, text | Đơn vị truy xuất và căn cứ |
 | `Hit` | unit, score, matched_terms | Kết quả CMP-05 |
-| `Resolution` | primary: Unit, superseded: list[Unit], upcoming: list[(Unit, date)], score | Kết quả CMP-06 |
+| `Resolution` | primary: Unit hoặc None, superseded: list[Unit], upcoming: list[(Unit, date)], found_score, matched_terms, not_found: bool | Kết quả CMP-06 (§6.5 bước 7) |
 | `Source` | ref, filename, doc_title, doc_number, effective_date, article (`"Điều 5"`), clause (`"khoản 1"` hoặc null), page | Phần tử của `sources[]` |
 | `Answer` | text, sources: list[Source], found: bool | Kết quả CMP-07 |
 | `UsageRecord` | at, latency_ms, status (ok/error), cited_count | Không có trường văn bản |
@@ -127,7 +127,7 @@ Không có bảng hay cột nào lưu câu hỏi hoặc câu trả lời (NFR-00
 | ID | Method / path | Request | Response 2xx | Lỗi |
 |---|---|---|---|---|
 | API-01 | `POST /api/documents` | multipart `files[]` (1–10) | 200 `{items:[{filename, status:"ready", document_id} \| {filename, error_code, message}]}` | 400 `too_many_files` |
-| API-02 | `GET /api/documents` | — | 200 `{items:[{id, filename, title, doc_number, effective_date, pages, status, error_code, message}], counts:{ready, failed, total}, limit:50}` | — |
+| API-02 | `GET /api/documents` | — | 200 `{items:[{id, filename, title, doc_number, effective_date, pages, status, error_code, message}], counts:{ready, processing, failed, total}, limit:50}` | — |
 | API-03 | `POST /api/ask` | `{question}` | 200 `{answer, found, latency_ms, sources:[Source]}` | 422 `question_invalid`, 409 `no_documents`, 503 `ai_unavailable` |
 | API-04 | `GET /healthz` | — | 200 `{status:"ok"}` | — |
 
@@ -157,7 +157,8 @@ Mã lỗi và thông điệp (một nguồn duy nhất: `app/domain/errors.py`, 
 
 - Mọi biểu thức chính quy chạy trên văn bản đã chuẩn hóa NFC, với `re.IGNORECASE`.
 - Trước khi so khớp, các loại gạch ngang (U+00AD, U+2010, U+2011, U+2013) được thay bằng `-`.
-- **"Câu":** đoạn văn bản kết thúc bằng `.`, `!`, `?`, `;` hoặc xuống dòng.
+- **"Câu":** tách tại xuống dòng, hoặc tại `.`, `!`, `?`, `;` không đứng giữa hai chữ số và theo sau là khoảng trắng: `(?<!\d)[.!?;](?=\s)|
+`. Nhờ vậy "300.000" không bị cắt.
 - Hằng số `DOC_NO = (\d+/[0-9A-Za-zĐđ/\-]+)`, dùng chung cho §6.2 và §6.3.
 
 ### 6.1 Cấu trúc (Chương / Điều / Khoản)
@@ -173,7 +174,7 @@ Mã lỗi và thông điệp (một nguồn duy nhất: `app/domain/errors.py`, 
 - **Số hiệu:** `Số\s*[:.]?\s*` + `DOC_NO`, lần xuất hiện đầu tiên trên trang 1.
 - **Tên văn bản:** dòng VIẾT HOA đầu tiên trên trang 1 bắt đầu bằng QUY CHẾ / QUYẾT ĐỊNH / NỘI QUY / QUY ĐỊNH / THÔNG BÁO. Nếu dòng chỉ có tên loại thì ghép thêm dòng ngay sau (tối đa 200 ký tự).
 - **Ngày ký:** `ngày\s+(\d{1,2})\s+tháng\s+(\d{1,2})\s+năm\s+(\d{4})`, lần đầu tiên trên trang 1.
-- **Ngày hiệu lực:** lần xuất hiện đầu tiên trong toàn văn bản của một trong các mẫu sau, theo thứ tự ưu tiên:
+- **Ngày hiệu lực:** thử lần lượt từng mẫu theo thứ tự ưu tiên dưới đây. Mẫu đầu tiên có khớp được dùng, lấy lần xuất hiện đầu tiên của mẫu đó trong toàn văn bản (ưu tiên theo mẫu, không theo vị trí):
   1. `hiệu lực(?:\s+thi hành)?(?:\s+kể)?\s+từ\s+ngày\s+(\d{1,2})[/.\-](\d{1,2})[/.\-](\d{4})`;
   2. `hiệu lực(?:\s+thi hành)?(?:\s+kể)?\s+từ\s+ngày\s+(\d{1,2})\s+tháng\s+(\d{1,2})\s+năm\s+(\d{4})`;
   3. `hiệu lực(?:\s+thi hành)?(?:\s+kể)?\s+từ\s+ngày\s+ký` → ngày hiệu lực = ngày ký (BRU-002).
@@ -213,17 +214,17 @@ Mã lỗi và thông điệp (một nguồn duy nhất: `app/domain/errors.py`, 
 
 **Thuật toán** (chạy đúng thứ tự, dừng ở bước có ghi "dừng"):
 
-1. **Lọc:** `current = [h ∈ hits | in_force(doc(h))]`, `future = [h ∈ hits | not in_force(doc(h))]`.
-2. **Gốc:**
-   - Nếu `current` rỗng: kết quả `primary = None`, `upcoming = future` → câu trả lời "chưa có quy định đang áp dụng" kèm danh sách sắp hiệu lực (§6.7). **Dừng.**
-   - Nếu không: `h0 = current[0]` (điểm cao nhất). `found_score = score(h0)` dùng cho ngưỡng §6.7 (A8: ngưỡng tính trên hit gốc, không phải sau khi đổi).
-3. **Về gốc của sửa đổi:**
-   - Nếu `targets(h0.unit)` khác rỗng (h0 là một Khoản sửa đổi): `base = argmax_{t ∈ targets(h0.unit)} score(q, t)`.
-   - Nếu không: `base = h0.unit`.
+1. **Ngưỡng trước** (R1): `h0 = hits[0]` (điểm cao nhất, kể cả văn bản chưa hiệu lực). `found_score = score(h0)`. Nếu §6.7 bước 1 không đạt (τ, ≥ 2 từ khớp trên `h0`) → NOT_FOUND. **Dừng.**
+2. **Gốc** (R2):
+   - Nếu `targets(h0.unit)` khác rỗng (h0 là Khoản sửa đổi, dù văn bản sửa đổi đã hay chưa hiệu lực): `base = argmax_{t ∈ targets(h0.unit)} score(q, t)`, tính trên mọi unit, không giới hạn top-k.
+   - Ngược lại, nếu `in_force(doc(h0))`: `base = h0.unit`.
+   - Ngược lại (h0 là văn bản tương lai không có liên kết): `base` = hit đang hiệu lực đầu tiên trong `hits`. Nếu không có: kết quả `primary = None`, `upcoming = [h0]` → câu "Hiện chưa có quy định đang áp dụng." kèm mục sắp có hiệu lực (§6.7). **Dừng.**
+   - `future = [h ∈ hits | not in_force(doc(h))]`.
+3. *(gộp vào bước 2)*
 4. **Chọn bản đang áp dụng** (A1, A2): `applied = base`, `superseded = []`. Lặp tối đa 5 lần:
    - `cands = [a ∈ amenders(applied) | in_force(doc(a)) và eff(doc(a)) > eff(doc(applied))]`.
    - Nếu `cands` rỗng thì thôi lặp.
-   - Nếu không: `newest` = phần tử có `eff` lớn nhất (bằng nhau thì xét `signed_date` muộn hơn, rồi `id` lớn hơn). Đưa `applied` vào `superseded`, rồi `applied = newest`.
+   - Nếu không: `newest` = phần tử có `eff` lớn nhất (bằng nhau thì xét `signed_date` muộn hơn, rồi `id` lớn hơn). Đưa `applied` **và mọi phần tử khác của `cands`** vào `superseded` (R3), rồi `applied = newest`.
    - Vòng lặp xử lý được sửa đổi nối chuỗi (A → B → C). Các văn bản cùng sửa một đích đều bị so sánh, chỉ giữ văn bản hiệu lực muộn nhất.
 5. **Sắp có hiệu lực:**
    - `upcoming = [a ∈ amenders(applied) ∪ amenders(base) | not in_force(doc(a))]`, sắp theo `eff` tăng dần;
@@ -260,7 +261,7 @@ Unit rỗng sau khi lọc thì bị bỏ.
 1. **Ngưỡng tìm thấy:** `found_score ≥ τ` **và** ≥ 2 unigram nội dung của câu hỏi có trong unit `h0` (§6.5 bước 2). Cả hai tính trên hit gốc, không phải trên bản đã đổi.
    - τ là cấu hình (`TCQC_THRESHOLD`), giá trị khởi đầu 2.0. Giá trị này được tinh chỉnh trên golden set ở chặng Test; giá trị cuối và lý do ghi vào TEST_REPORT.
    - Không đạt → `NOT_FOUND = "Không tìm thấy quy định này trong các văn bản đã tải lên."`, `sources = []`.
-   - Trường hợp §6.5 bước 2 (`primary = None`): câu "Hiện chưa có quy định đang áp dụng." kèm các mục sắp có hiệu lực (bước 4 bên dưới), `found = true`.
+   - Trường hợp §6.5 bước 2 (`primary = None`, đã qua ngưỡng ở bước 1): câu "Hiện chưa có quy định đang áp dụng." kèm các mục sắp có hiệu lực (bước 4 bên dưới), `found = true`.
 2. **Câu chính:** nội dung Khoản primary (bỏ tiêu đề Điều) + ` [1]`.
 3. **Nếu có `superseded`:** thêm "Quy định này thay thế {Điều k, khoản n} của {tên} số {số hiệu} (trước đây: «{nội dung}») [2]".
 4. **Nếu có `upcoming`:** thêm "Lưu ý: {Điều …} của {tên} số {số hiệu} sắp có hiệu lực từ {dd/mm/yyyy}: «{nội dung}» [3]".
@@ -316,7 +317,7 @@ Tất cả FR-001..020 và NFR-001..010 đều có phần tử thiết kế. FR-
 
 | ID | Câu hỏi | Owner | Cần trước |
 |---|---|---|---|
-| OQ-008 | (SAD §3.5) API-01 trả trạng thái cuối thay cho "Đang xử lý" | PO | Cổng Design |
+| OQ-008 | (SAD §3.5) API-01 trả trạng thái cuối thay cho "Đang xử lý" | PO | **Đã quyết 2026-11-02: chấp nhận** |
 
 **Self-check:**
 - mọi FR/NFR có phần tử thiết kế (§10);

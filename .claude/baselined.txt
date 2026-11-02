@@ -2,3 +2,4 @@
 docs/01-intake/
 docs/02-requirements/
 docs/03-analysis/
+docs/04-design/
