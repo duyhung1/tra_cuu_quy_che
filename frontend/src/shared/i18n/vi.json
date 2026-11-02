@@ -1,0 +1,98 @@
+{
+  "app": {
+    "name": "Tra cứu quy chế",
+    "mvp": "MVP",
+    "menu": "Mở menu điều hướng",
+    "skip": "Bỏ qua tới nội dung chính",
+    "footer": "Phiên bản MVP 0.1",
+    "readyDocs": "{{count}} văn bản Sẵn sàng"
+  },
+  "nav": {
+    "ask": "Hỏi đáp",
+    "documents": "Văn bản"
+  },
+  "common": {
+    "close": "Đóng",
+    "retry": "Thử lại",
+    "loading": "Đang tải…"
+  },
+  "documents": {
+    "title": "Văn bản quy chế",
+    "subtitle": "Mọi văn bản ở trạng thái <b>Sẵn sàng</b> đều được dùng làm căn cứ trả lời. Số hiệu và ngày hiệu lực được đọc tự động từ nội dung.",
+    "usage": "{{used}}/{{limit}} văn bản",
+    "uploadTitle": "Tải lên quy chế, nội quy, văn bản pháp quy (PDF)",
+    "uploadHint": "Tối đa {{maxFiles}} file mỗi lần · mỗi file ≤ {{maxMb}} MB và ≤ 300 trang · chỉ PDF có lớp văn bản (chưa hỗ trợ PDF dạng ảnh scan).",
+    "chooseFiles": "Chọn file PDF",
+    "uploading": "Đang tải lên…",
+    "tooManyFiles": "Mỗi lần chỉ tải tối đa {{maxFiles}} tệp. Bạn đã chọn {{count}} tệp — vui lòng chọn lại.",
+    "rejected": "Các tệp sau không được tải lên:",
+    "uploadDone": "Đã tải lên {{count}} tệp, đang chờ xử lý.",
+    "readyToast": "\"{{name}}\" đã sẵn sàng để tra cứu.",
+    "autoRefresh": "Tự cập nhật mỗi 3 giây khi có văn bản đang xử lý",
+    "columns": {
+      "filename": "Văn bản",
+      "docNumber": "Số hiệu",
+      "effectiveDate": "Hiệu lực",
+      "pages": "Số trang",
+      "uploadedAt": "Ngày tải lên",
+      "status": "Trạng thái"
+    },
+    "status": {
+      "queued": "Đang chờ xử lý",
+      "processing": "Đang xử lý",
+      "ready": "Sẵn sàng",
+      "failed": "Lỗi"
+    },
+    "emptyTitle": "Chưa có văn bản nào",
+    "emptyBody": "Chọn file PDF phía trên để bắt đầu. Văn bản nên có cấu trúc Chương / Điều / Khoản để câu trả lời trích dẫn được chính xác.",
+    "loadError": "Không tải được danh sách văn bản."
+  },
+  "ask": {
+    "title": "Tra cứu",
+    "sources": "{{count}} văn bản đang dùng",
+    "processingNotice": "{{count}} văn bản đang xử lý, chưa được dùng để trả lời.",
+    "placeholder": "Hỏi về quy định, ví dụ: Công tác phí mỗi ngày là bao nhiêu?",
+    "placeholderLocked": "Tải lên văn bản để bắt đầu",
+    "send": "Gửi câu hỏi",
+    "hint": "Enter để gửi · Shift+Enter để xuống dòng",
+    "counter": "{{count}}/{{max}}",
+    "tooLong": "Câu hỏi dài quá {{over}} ký tự.",
+    "thinking": "Đang tra cứu các Điều liên quan…",
+    "thinkingSub": "Có thể mất tới 20 giây",
+    "aiLabel": "Câu trả lời do AI tạo — hãy đối chiếu Điều khoản gốc",
+    "errorTitle": "Hệ thống đang bận, vui lòng thử lại.",
+    "errorSub": "Câu hỏi của bạn không bị mất.",
+    "askAgain": "Hỏi lại",
+    "lockedTitle": "Tải lên văn bản để bắt đầu",
+    "lockedBody": "Chưa có văn bản nào ở trạng thái Sẵn sàng. Hãy tải quy chế, nội quy hoặc văn bản pháp quy lên, sau đó quay lại đây để đặt câu hỏi.",
+    "lockedCta": "Tải lên văn bản",
+    "welcomeTitle": "Bạn cần tra cứu quy định nào?",
+    "welcomeBody": "Câu trả lời chỉ dựa trên các văn bản đã tải lên và ghi rõ căn cứ Điều, Khoản. Khi các văn bản quy định khác nhau, văn bản có hiệu lực muộn hơn được áp dụng.",
+    "latency": "Trả lời trong {{seconds}} giây",
+    "you": "Bạn",
+    "ai": "AI",
+    "sourcesTitle": "Căn cứ",
+    "sourceNumber": "Số {{number}}",
+    "sourceEffective": "hiệu lực {{date}}",
+    "sourcePage": "trang {{page}}"
+  },
+  "errors": {
+    "not_pdf": "Không phải tệp PDF hợp lệ",
+    "file_too_large": "Vượt quá 20 MB",
+    "too_many_files": "Mỗi lần chỉ tải tối đa 10 tệp",
+    "duplicate_name": "Đã có văn bản cùng tên",
+    "collection_full": "Bộ văn bản đã đủ 50 văn bản. Liên hệ quản trị viên để gỡ bớt.",
+    "encrypted_pdf": "Tệp có mật khẩu",
+    "no_text_layer": "PDF dạng ảnh chưa được hỗ trợ",
+    "too_many_pages": "Dài hơn 300 trang",
+    "corrupted": "Tệp bị hỏng",
+    "transient_exhausted": "Lỗi tạm thời, hãy tải lại",
+    "question_invalid": "Câu hỏi không hợp lệ (1–2000 ký tự).",
+    "no_documents": "Chưa có văn bản nào Sẵn sàng để trả lời.",
+    "ai_unavailable": "Hệ thống đang bận, vui lòng thử lại.",
+    "storage_error": "Không lưu được tệp. Vui lòng thử lại.",
+    "internal_error": "Hệ thống gặp lỗi. Vui lòng thử lại sau ít phút.",
+    "network": "Mất kết nối. Vui lòng kiểm tra mạng và thử lại.",
+    "unknown": "Đã xảy ra lỗi. Vui lòng thử lại."
+  }
+}

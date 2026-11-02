@@ -1,0 +1,49 @@
+# Golden set (T-008) for the 3 sample regulation PDFs in tests/fixtures/pdfs/sample/.
+# Replace with ≥ 30 positive and ≥ 10 negative questions about the real documents.
+# type: positive = answer exists in the documents; negative = it does not.
+# expected_article: the article that must appear in the response's `sources` (cited_ok column).
+- id: G-001
+  type: positive
+  question: "Thời giờ làm việc của công ty là mấy giờ?"
+  expected_answer: "Từ 08:00 đến 17:30, thứ Hai đến thứ Sáu; nghỉ trưa 12:00–13:30 (Điều 4 Nội quy lao động)."
+  expected_article: "Điều 4"
+- id: G-002
+  type: positive
+  question: "Tôi làm được 6 năm thì được nghỉ phép bao nhiêu ngày?"
+  expected_answer: "13 ngày: 12 ngày phép năm, cộng 1 ngày cho mỗi đủ 5 năm làm việc (Điều 7 Nội quy lao động)."
+  expected_article: "Điều 7"
+- id: G-003
+  type: positive
+  question: "Đi muộn bao nhiêu lần thì bị khiển trách?"
+  expected_answer: "Quá 03 lần trong một tháng (Điều 9 Nội quy lao động)."
+  expected_article: "Điều 9"
+- id: G-004
+  type: positive
+  question: "Đi công tác Đà Nẵng từ Hà Nội có được đi máy bay không?"
+  expected_answer: "Có, chặng từ 300 km trở lên được mua vé máy bay hạng phổ thông (Điều 6 Quy chế chi tiêu nội bộ)."
+  expected_article: "Điều 6"
+- id: G-005
+  type: positive
+  question: "Mức chi tiếp khách tối đa mỗi lần là bao nhiêu?"
+  expected_answer: "2.000.000 đồng/lần, phải được Trưởng phòng phê duyệt trước (Điều 8)."
+  expected_article: "Điều 8"
+# Conflict between two documents: the later one (effective 01/07/2026) must win.
+- id: G-006
+  type: positive
+  question: "Phụ cấp lưu trú khi đi công tác hiện nay là bao nhiêu một ngày?"
+  expected_answer: "450.000 đồng/ngày (500.000 đồng ở miền núi, hải đảo) theo Điều 1 Quyết định 02/2026/QĐ-SM, thay thế mức 300.000 đồng của Điều 5 Quy chế 08/2025/QC-SM."
+  expected_article: "Điều 1"
+- id: G-007
+  type: positive
+  question: "Đi công tác trong ngày thì được phụ cấp bao nhiêu?"
+  expected_answer: "150.000 đồng (khoản 2 Điều 5 Quy chế chi tiêu nội bộ; Quyết định 02/2026 chỉ thay thế khoản 1)."
+  expected_article: "Điều 5"
+- id: G-051
+  type: negative
+  question: "Thủ đô của Pháp là gì?"
+- id: G-052
+  type: negative
+  question: "Công ty có chế độ thưởng Tết bao nhiêu tháng lương?"
+- id: G-053
+  type: negative
+  question: "Theo Bộ luật Lao động, thời gian thử việc tối đa là bao lâu?"

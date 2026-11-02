@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tra-cuu-quy-che"
+version = "0.1.0"
+description = "Tra cứu quy chế — MVP backend (FastAPI + pgvector + Claude)"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115,<1",
+    "uvicorn[standard]>=0.30,<1",
+    "sqlalchemy[asyncio]>=2.0,<3",
+    "asyncpg>=0.29,<1",
+    "psycopg[binary]>=3.2,<4",
+    "pgvector>=0.3,<1",
+    "alembic>=1.13,<2",
+    "pydantic-settings>=2.4,<3",
+    "structlog>=24.1,<26",
+    "pymupdf>=1.24,<2",
+    "tokenizers>=0.19,<1",
+    "httpx>=0.27,<1",
+    "anthropic>=0.40",
+    "boto3>=1.34,<2",
+    "python-multipart>=0.0.9,<1",
+    "pyyaml>=6,<7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8,<9",
+    "pytest-asyncio>=0.23,<1",
+    "testcontainers[postgres]>=4,<5",
+    "ruff>=0.5,<1",
+    "mypy>=1.10,<2",
+    "types-PyYAML",
+]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.File", "fastapi.params.Depends"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+check_untyped_defs = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = [
+    "eval: golden-set evaluation, excluded from CI",
+    "live: calls real external services (Anthropic/TEI), run manually",
+    "integration: needs a PostgreSQL database (TEST_DATABASE_URL or Docker)",
+]
+addopts = "-m 'not eval and not live'"

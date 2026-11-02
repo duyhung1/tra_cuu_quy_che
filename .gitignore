@@ -1,0 +1,16 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+frontend/dist/
+backend/tests/eval/results/
+.DS_Store
+*.egg-info/
+
+# Test evidence: generated input files are reproducible (frontend/e2e/lib.sh make_pdf)
+test_reports/*/data/
+test_reports/_tmp/

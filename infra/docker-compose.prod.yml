@@ -1,0 +1,46 @@
+# Production stack on the EC2 host (T-006). PostgreSQL is RDS and storage is S3,
+# so neither runs here. Images come from ECR; TAG is set by deploy.sh.
+name: tcqc
+
+x-backend: &backend
+  image: ${REGISTRY}/tcqc-api:${TAG}
+  env_file: .env           # written by deploy.sh from Secrets Manager (mode 600)
+  restart: unless-stopped
+  logging:
+    driver: awslogs
+    options:
+      awslogs-region: ap-southeast-1
+      awslogs-group: /tcqc/prod
+      awslogs-create-group: "true"
+
+services:
+  web:
+    image: ${REGISTRY}/tcqc-web:${TAG}
+    ports: ["80:80"]
+    restart: unless-stopped
+    depends_on: [api]
+
+  api:
+    <<: *backend
+    command: ["uvicorn", "app.api.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://localhost:8000/healthz')"]
+      interval: 15s
+
+  worker:
+    <<: *backend
+    command: ["python", "-m", "app.worker.main"]
+    deploy:
+      replicas: 2
+
+  tei:
+    image: ghcr.io/huggingface/text-embeddings-inference:cpu-1.7
+    command: ["--model-id", "BAAI/bge-m3", "--max-batch-tokens", "16384"]
+    volumes: [tei-cache:/data]
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits: { cpus: "3", memory: 6g }
+
+volumes:
+  tei-cache:
