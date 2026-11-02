@@ -22,14 +22,14 @@ services:
 
   api:
     <<: *backend
-    command: ["uvicorn", "app.api.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://localhost:8000/healthz')"]
       interval: 15s
 
   worker:
     <<: *backend
-    command: ["python", "-m", "app.worker.main"]
+    command: ["python", "-m", "app.worker"]
     deploy:
       replicas: 2
 
