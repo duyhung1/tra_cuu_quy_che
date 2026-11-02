@@ -1,6 +1,7 @@
 """Ask service (TASK-009, SAD §3.3): retrieve → resolve → answer, 30 s timeout, usage record."""
 
 import logging
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from concurrent.futures import TimeoutError as FutureTimeout
@@ -15,6 +16,8 @@ from app.services.resolver import resolve
 
 log = logging.getLogger("tcqc.ask")
 MAX_QUESTION = 2000
+# CR-R-02: a timed-out pipeline keeps its worker until it finishes; the pipeline is CPU-bound and takes
+# milliseconds on the capstone corpus (NFR-001 measured in TEST_REPORT), so 16 workers bound the backlog.
 _pool = ThreadPoolExecutor(max_workers=16)
 
 
@@ -32,11 +35,14 @@ class AskService:
         self.store, self.retriever, self.answerer = store, retriever, answerer
         self.usage, self.clock, self.settings = usage, clock, settings
         self._revision = -1
+        self._lock = threading.Lock()
 
     def _refresh(self) -> None:
-        if self.store.revision != self._revision:
-            self.retriever.rebuild(self.store.ready_units())
-            self._revision = self.store.revision
+        with self._lock:  # CR-R-01: one rebuild at a time; readers keep the previous snapshot meanwhile
+            if self.store.revision != self._revision:
+                revision = self.store.revision
+                self.retriever.rebuild(self.store.ready_units())
+                self._revision = revision
 
     def _pipeline(self, q: str) -> Answer:
         self._refresh()

@@ -93,3 +93,36 @@ def test_ten_concurrent_questions(client, pdfs):
 def test_ui_is_served(client):
     r = client.get("/")
     assert r.status_code == 200 and 'data-testid="ask-input"' in r.text
+
+
+def test_timeout_is_503_and_logged(settings, pdfs, monkeypatch):
+    """CR-R-02 / FR-015: a pipeline slower than timeout_s returns 503 and an error usage record."""
+    import time
+    from dataclasses import replace
+
+    app = create_app(replace(settings, timeout_s=0.2))
+    c = TestClient(app, raise_server_exceptions=False)
+    upload_samples(c, pdfs)
+    monkeypatch.setattr(app.state.ask, "_pipeline", lambda q: time.sleep(1))
+    r = c.post("/api/ask", json={"question": "Thời giờ làm việc?"})
+    assert r.status_code == 503 and r.json()["code"] == "ai_unavailable"
+    assert app.state.store.usage()[-1]["status"] == "error"
+
+
+def test_rebuild_during_questions_never_fails(client, pdfs):
+    """CR-R-01: uploads (index rebuilds) racing with questions never produce 503."""
+    from tests.fixtures.make_pdfs import text_pdf
+
+    upload_samples(client, pdfs)
+
+    def upload(i):
+        doc = text_pdf([f"Điều 1. Quy định {i}\n1. Nội dung bổ sung số {i} về chế độ làm việc của nhân viên."])
+        return client.post("/api/documents", files=[("files", (f"extra_{i}.pdf", doc, "application/pdf"))]).status_code
+
+    def ask(_):
+        return client.post("/api/ask", json={"question": "Thời giờ làm việc từ mấy giờ?"}).status_code
+
+    with ThreadPoolExecutor(12) as ex:
+        futures = [ex.submit(upload, i) for i in range(4)] + [ex.submit(ask, i) for i in range(20)]
+        codes = [f.result() for f in futures]
+    assert set(codes) == {200}
