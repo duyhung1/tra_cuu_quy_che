@@ -3,7 +3,7 @@
 | Mục | Giá trị |
 |---|---|
 | Document ID | TCQC-US |
-| Version | 0.2 |
+| Version | 0.3 |
 | Status | In review |
 | Owner / Approver | Phùng Duy Hùng (PO) |
 | Date | 2026-11-02 |
@@ -24,8 +24,9 @@ Là **Minh (HC-NS)**, tôi muốn đưa nhiều PDF quy chế vào cùng một l
 | US-001-AC3 | một lần gồm 1 tệp hợp lệ, 1 PDF scan, 1 PDF có mật khẩu, 1 tệp hỏng, 1 tệp không phải PDF | gửi | tệp hợp lệ được nhận; 4 tệp còn lại mỗi tệp hiện đúng một lý do tiếng Việt |
 | US-001-AC4 | kho đã có "Noi_quy.pdf" | đưa thêm một tệp cùng tên | tệp bị từ chối với lý do "Đã có văn bản cùng tên" |
 | US-001-AC5 | một tệp > 20 MB hoặc > 300 trang | gửi | tệp bị từ chối với lý do vượt giới hạn tương ứng |
+| US-001-AC6 | kho đã có 50 văn bản | đưa thêm một văn bản hợp lệ | văn bản bị từ chối với thông báo "Kho đã đủ 50 văn bản" (FR-016) |
 
-### US-002 — Xem văn bản đang dùng (P0) · FR-003, FR-004, FR-004b, FR-005 · BR-002, BR-003
+### US-002 — Xem văn bản đang dùng (P0) · FR-003, FR-004, FR-018, FR-005 · BR-002, BR-003
 Là **Hà (kế toán)**, tôi muốn thấy danh sách văn bản đang dùng kèm số hiệu và ngày hiệu lực, để biết câu trả lời dựa trên văn bản nào.
 
 | AC | Given | When | Then |
@@ -37,7 +38,7 @@ Là **Hà (kế toán)**, tôi muốn thấy danh sách văn bản đang dùng k
 
 ## E2 — Tra cứu có căn cứ
 
-### US-003 — Hỏi và nhận câu trả lời có căn cứ (P0) · FR-006, FR-007, FR-007b, FR-008 · BR-004, BR-005, BR-016
+### US-003 — Hỏi và nhận câu trả lời có căn cứ (P0) · FR-006, FR-007, FR-019, FR-008 · BR-004, BR-005, BR-016
 Là **Lan (nhân viên)**, tôi muốn hỏi bằng tiếng Việt và nhận câu trả lời kèm Điều/Khoản, để làm đúng thủ tục mà không phải hỏi HC-NS.
 
 | AC | Given | When | Then |
@@ -47,7 +48,7 @@ Là **Lan (nhân viên)**, tôi muốn hỏi bằng tiếng Việt và nhận c�
 | US-003-AC3 | ô hỏi rỗng hoặc > 2000 ký tự | cố gửi | không gửi được; bộ đếm báo lỗi |
 | US-003-AC4 | golden set | chạy toàn bộ | MET-002 ≥ 80 %, MET-007 ≥ 80 % |
 
-### US-004 — Áp dụng văn bản hiệu lực muộn hơn (P0) · FR-009, FR-009b · BR-006, BR-007
+### US-004 — Áp dụng văn bản hiệu lực muộn hơn (P0) · FR-009, FR-020 · BR-006, BR-007
 Là **Hà (kế toán)**, tôi muốn câu trả lời dùng mức của quyết định sửa đổi mới nhất và nêu mức cũ, để không chi theo quy định đã bị thay.
 
 | AC | Given | When | Then |
@@ -100,6 +101,7 @@ Là **PO**, tôi muốn mỗi câu hỏi để lại một bản ghi số liệu
 
 | AC | Given | When | Then |
 |---|---|---|---|
-| US-007-AC1 | hỏi 1 câu | xem bảng số liệu | có đúng 1 bản ghi: thời điểm, latency, status, cited_count |
-| US-007-AC2 | đã chạy golden set | tìm chuỗi một câu hỏi mẫu trong log và CSDL | không có kết quả |
-| US-007-AC3 | dịch vụ trả lời lỗi | gửi câu hỏi | vẫn có bản ghi với status = error |
+| US-007-AC1 | hỏi 1 câu | xem nơi lưu số liệu | có đúng 1 bản ghi: thời điểm, thời gian trả lời, kết quả, số căn cứ |
+| US-007-AC2 | đã chạy golden set | tìm chuỗi một câu hỏi mẫu trong log và nơi lưu số liệu | không có kết quả |
+| US-007-AC3 | thành phần tạo câu trả lời lỗi | gửi câu hỏi | vẫn có bản ghi với kết quả = lỗi |
+| US-007-AC4 | không ghi được bản ghi số liệu | gửi câu hỏi | người dùng vẫn nhận câu trả lời (FR-017) |

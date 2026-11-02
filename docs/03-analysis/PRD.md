@@ -3,14 +3,16 @@
 | Mục | Giá trị |
 |---|---|
 | Document ID | TCQC-PRD |
-| Version | 0.2 |
-| Status | In review (audit vòng 2) |
+| Version | 0.3 |
+| Status | In review (audit vòng 3) |
 | Owner / Approver | Phùng Duy Hùng (PO) |
 | Author | AI agent (Claude Code) |
 | Date | 2026-11-02 |
 | Prompt | `sdlc-kit/analysis/PRD_Prompt_IEEE_standard.md` v2.0; tham số: `prompts/03-analysis.md` |
 | Đầu vào | `docs/02-requirements/BRD.md` v1.0 (`requirements-v1`); `docs/01-intake/glossary.md`, `stakeholders.md` (`intake-v1`) |
 | Thay đổi 0.2 | Sửa theo `prd-audit.md` vòng 1; ghi quyết định PO về OQ-006, OQ-007, DEP-001 (2026-11-02) |
+| Thay đổi 0.3 | Sửa theo vòng 2: biên bản SRC-006; thêm §1.3 Scope và §1.4 Interfaces (khai báo theo §5 output contract); đổi FR-004b/007b/009b → FR-018/019/020; bỏ 95 % chưa có nguồn |
+| Nguồn quyết định | [decisions/SRC-006.md](decisions/SRC-006.md) |
 | User stories | [USER_STORIES.md](USER_STORIES.md) |
 | Truy vết | [traceability.md](traceability.md) |
 
@@ -31,6 +33,16 @@ Không có pillar nào thiếu căn cứ trong BRD.
 
 Mọi quyết định chi tiêu, nghỉ phép, kỷ luật trong công ty đều dựa trên đúng quy định đang áp dụng; người dùng tra được trong ≤ 2 phút (MET-001), có căn cứ để kiểm lại [Source: BRD §4.2].
 
+### 1.2 Objectives & Key Results
+
+| OKR | Key result | Baseline | Target | Cách đo | BRD |
+|---|---|---|---|---|---|
+| O1: Tra nhanh | KR1: thời gian người dùng có câu trả lời | ~15 phút (ASM-001) | ≤ 2 phút | Bấm giờ 5 câu khi nghiệm thu | MET-001 |
+| | KR2: thời gian hệ thống trả lời | Không có (hệ thống mới, chưa từng đo) | p90 ≤ 30 giây | Golden set | MET-006 |
+| O2: Căn cứ đúng | KR3: câu dương tính trả lời đúng và trích đúng Điều | Không có (tra tay, chưa ghi nhận) | ≥ 80 % | Golden set, PO chấm | MET-002 |
+| | KR4: câu xung đột áp dụng đúng văn bản | Không có (như trên) | 100 % | Golden set | MET-003 |
+| O3: Không bịa | KR5: câu âm tính được từ chối | Không có (như trên) | ≥ 90 % | Golden set | MET-004 |
+
 ### 1.3 Scope, environment, constraints, dependencies
 
 - **Scope:** như BRD §4.5. In scope: kho văn bản PDF có lớp văn bản, tra cứu có căn cứ, xử lý hiệu lực, số liệu không nội dung. Out of scope: đăng nhập/phân quyền, OCR/DOCX, soạn văn bản, tư vấn pháp lý, lưu lịch sử hỏi đáp, di động, tích hợp. Ranh giới: từ lúc văn bản vào kho đến lúc người dùng đọc câu trả lời.
@@ -39,9 +51,9 @@ Mọi quyết định chi tiêu, nghỉ phép, kỷ luật trong công ty đều
 
 | Dependency (BRD §4.10) | Ảnh hưởng tới | Quyết định / trạng thái |
 |---|---|---|
-| DEP-001 Dịch vụ tạo câu trả lời | FR-007..FR-012, FR-015, NFR-001 | **PO quyết định 2026-11-02:** không dùng dịch vụ bên ngoài trong giai đoạn này. Câu trả lời do một thành phần chạy trong hệ thống tạo ra, theo quy tắc, hoán đổi được về sau (ghi ADR ở Design). RSK-004 không còn áp dụng |
+| DEP-001 Dịch vụ tạo câu trả lời | FR-007..FR-012, FR-015, NFR-001 | **PO quyết định 2026-11-02 (SRC-006 D4):** không có nội dung nào được gửi ra ngoài công ty trong giai đoạn này. Cách tạo câu trả lời được quyết ở ADR (chặng Design). Đây là biện pháp giảm thiểu RSK-004; RSK-004 vẫn mở cho giai đoạn dùng thật (BRD không đổi) |
 | DEP-002 Bộ văn bản mẫu | FR-003, FR-009, FR-010, FR-012 | Soạn ở chặng Design (dữ liệu giả lập) |
-| DEP-003 Golden set và người chấm | KR3..KR5, MET-007, NFR-001 | Soạn ở chặng Test; cỡ theo OQ-006 (đã chốt) |
+| DEP-003 Golden set và người chấm | KR3..KR5, MET-007, NFR-001 | Soạn ở chặng Test; cỡ theo OQ-006 (SRC-006 D3) |
 | DEP-004 Môi trường nội bộ | NFR-004, NFR-005 | Máy cục bộ trong capstone |
 | DEP-005 PO có mặt ở mọi cổng | Lịch | Đang đáp ứng |
 
@@ -52,19 +64,9 @@ Mọi quyết định chi tiêu, nghỉ phép, kỷ luật trong công ty đều
 | IF-01 Đưa văn bản vào | 1–10 tệp PDF | Mỗi tệp: nhận (mã văn bản, trạng thái Đang xử lý) hoặc từ chối (mã lý do) | Cả lần bị từ chối khi > 10 tệp | FR-001, FR-002, FR-016 |
 | IF-02 Danh sách văn bản | — | Mỗi văn bản: tên, tên tệp, số hiệu, ngày hiệu lực, số trang, trạng thái, mã lỗi | — | FR-004 |
 | IF-03 Tra cứu | Câu hỏi 1–2000 ký tự | Câu trả lời, thời gian trả lời, danh sách căn cứ | Câu hỏi không hợp lệ; chưa có văn bản; hệ thống bận | FR-006..FR-011, FR-015 |
-| IF-04 Thành phần tạo câu trả lời (nội bộ, DEP-001) | Câu hỏi, các đoạn văn bản tìm được kèm thông tin văn bản | Văn bản trả lời có [n], hoặc câu không tìm thấy | Lỗi hoặc quá 30 giây → FR-015 | FR-007, FR-015 |
+| IF-04 Thành phần tạo câu trả lời (nội bộ, DEP-001) | Câu hỏi, các phần văn bản liên quan kèm thông tin văn bản | Văn bản trả lời có [n], hoặc câu không tìm thấy | Lỗi hoặc quá 30 giây → FR-015 | FR-007, FR-015 |
 
 Kênh giao tiếp: trình duyệt với hệ thống qua HTTP trong máy cục bộ. Khi triển khai trong mạng công ty dùng HTTPS (NFR-004). Không có kênh ra ngoài công ty (DEP-001).
-
-### 1.2 Objectives & Key Results
-
-| OKR | Key result | Baseline | Target | Cách đo | BRD |
-|---|---|---|---|---|---|
-| O1: Tra nhanh | KR1: thời gian người dùng có câu trả lời | ~15 phút (ASM-001) | ≤ 2 phút | Bấm giờ 5 câu khi nghiệm thu | MET-001 |
-| | KR2: thời gian hệ thống trả lời | Không có (hệ thống mới, chưa từng đo) | p90 ≤ 30 giây | Golden set | MET-006 |
-| O2: Căn cứ đúng | KR3: câu dương tính trả lời đúng và trích đúng Điều | Không có (tra tay, chưa ghi nhận) | ≥ 80 % | Golden set, PO chấm | MET-002 |
-| | KR4: câu xung đột áp dụng đúng văn bản | Không có (như trên) | 100 % | Golden set | MET-003 |
-| O3: Không bịa | KR5: câu âm tính được từ chối | Không có (như trên) | ≥ 90 % | Golden set | MET-004 |
 
 ## 2. User Personas & User Journeys
 
@@ -102,17 +104,17 @@ journey
 | ID | Yêu cầu (hệ thống shall …) | BR | Priority | Tiêu chí đo được |
 |---|---|---|---|---|
 | FR-001 | nhận 1–10 tệp PDF trong một lần đưa vào | BR-001, BRU-004 | P0 | 10 tệp hợp lệ được nhận; chọn 11 tệp thì cả lần bị từ chối ngay khi chọn, trước khi gửi, với thông báo "Mỗi lần chỉ tải tối đa 10 tệp" |
-| FR-002 | xét từng tệp và trả về đúng một lý do khi từ chối: không phải PDF, vượt 20 MB, quá 300 trang, có mật khẩu, PDF dạng ảnh, tệp hỏng, trùng tên, kho đã đủ 50 văn bản | BR-002, BRU-004, BRU-005 | P0 | Mỗi loại lỗi cho đúng thông điệp tiếng Việt; tệp hợp lệ trong cùng lần vẫn được nhận |
+| FR-002 | xét từng tệp và trả về đúng một lý do khi từ chối: không phải PDF, vượt 20 MB, quá 300 trang, có mật khẩu, PDF dạng ảnh, tệp hỏng, trùng tên (kho đầy: FR-016) | BR-002, BRU-004, BRU-005 | P0 | Mỗi loại lỗi cho đúng thông điệp tiếng Việt; tệp hợp lệ trong cùng lần vẫn được nhận |
 | FR-003 | đọc số hiệu, tên văn bản và ngày hiệu lực từ nội dung văn bản; "hiệu lực kể từ ngày ký" thì lấy ngày ký | BR-003, BRU-002 | P0 | Đúng cho 100 % văn bản mẫu |
 | FR-004 | hiển thị danh sách văn bản, mỗi văn bản có trạng thái (Đang xử lý, Sẵn sàng, Lỗi + lý do), số hiệu và ngày hiệu lực | BR-002, BR-003 | P0 | Đủ cột cho 100 % văn bản |
-| FR-004b | tự cập nhật trạng thái trên danh sách khi còn văn bản Đang xử lý | BR-003 | P0 | Trạng thái mới hiện ≤ 5 giây sau khi đổi |
+| FR-018 | tự cập nhật trạng thái trên danh sách khi còn văn bản Đang xử lý | BR-003 | P0 | Trạng thái mới hiện ≤ 5 giây sau khi đổi |
 | FR-005 | chỉ dùng văn bản ở trạng thái Sẵn sàng để trả lời | BR-004 | P0 | Văn bản Đang xử lý / Lỗi không xuất hiện trong căn cứ |
 | FR-006 | nhận câu hỏi tiếng Việt dài 1–2000 ký tự | BR-004 | P0 | Câu rỗng hoặc > 2000 ký tự bị từ chối kèm thông báo |
 | FR-007 | trả lời chỉ dựa trên nội dung các văn bản Sẵn sàng | BR-004, BR-016 | P0 | Golden set: MET-002 ≥ 80 %, MET-007 ≥ 80 % |
-| FR-007b | gắn cho mỗi ý của câu trả lời một số tham chiếu [n] trỏ tới một căn cứ | BR-005 | P0 | 100 % câu trả lời dương tính có ít nhất một [n] hợp lệ |
+| FR-019 | gắn cho mỗi ý của câu trả lời một số tham chiếu [n] trỏ tới một căn cứ | BR-005 | P0 | 100 % câu trả lời dương tính có ít nhất một [n] hợp lệ |
 | FR-008 | hiện danh sách căn cứ dưới câu trả lời: [n], Điều (và Khoản nếu có), tên văn bản, số hiệu, ngày hiệu lực, trang | BR-005 | P0 | Mọi căn cứ có đủ năm thành phần khi văn bản có thông tin đó |
 | FR-009 | khi hai văn bản đang hiệu lực khác nhau về cùng một việc, áp dụng văn bản có ngày hiệu lực muộn hơn | BR-006, BRU-001 | P0 | Golden set: MET-003 = 100 % |
-| FR-009b | khi áp dụng FR-009, nêu số hiệu và quy định của văn bản bị thay | BR-007 | P0 | AC-007 |
+| FR-020 | khi áp dụng FR-009, nêu số hiệu và quy định của văn bản bị thay | BR-007 | P0 | AC-007 |
 | FR-010 | với văn bản chưa đến ngày hiệu lực: giữ quy định đang áp dụng, ghi "sắp có hiệu lực" kèm ngày | BR-013, BR-015, BRU-003 | P1 | Câu kiểm thử về văn bản tương lai đạt AC-013, AC-015 |
 | FR-011 | khi không văn bản nào quy định điều được hỏi, trả lời đúng câu "Không tìm thấy quy định này trong các văn bản đã tải lên." và không kèm căn cứ | BR-008 | P0 | Golden set: MET-004 ≥ 90 % |
 | FR-012 | coi nội dung văn bản là dữ liệu, không làm theo chỉ dẫn nằm trong văn bản | BR-012 | P0 | AC-012 |
@@ -127,12 +129,12 @@ journey
 | ID | Thuộc tính | Ngưỡng | Cách đo | BR |
 |---|---|---|---|---|
 | NFR-001 | Độ trễ trả lời | p90 ≤ 30 giây trên golden set | Số liệu FR-014 khi chạy golden set | BR-009 |
-| NFR-002 | Thời gian văn bản sẵn sàng | Văn bản ≤ 20 trang sẵn sàng ≤ 60 giây sau khi đưa vào (PO xác nhận, OQ-007) | Đo khi chạy kiểm thử đưa văn bản | BR-001 (SN-03 "dùng ngay") |
+| NFR-002 | Thời gian văn bản sẵn sàng | Văn bản ≤ 20 trang sẵn sàng ≤ 60 giây sau khi đưa vào (PO xác nhận, SRC-006 D1) | Đo khi chạy kiểm thử đưa văn bản | BR-001 (SN-03 "dùng ngay") |
 | NFR-003 | Bảo mật nội dung | 0 lần nội dung câu hỏi, câu trả lời, văn bản xuất hiện trong log hay nơi lưu số liệu | Tìm chuỗi câu hỏi mẫu trong log và nơi lưu số liệu sau khi chạy (AC-011) | BR-011 |
 | NFR-009 | Mã hóa | Không áp dụng trong capstone: dữ liệu giả lập (CON-02), không có kênh ra ngoài (DEP-001). Khi dùng thật: HTTPS (NFR-004) và mã hóa nơi lưu văn bản | Inspection | BR-011, BR-014 |
 | NFR-004 | Phạm vi truy cập | Chỉ dải mạng nội bộ; giao tiếp qua HTTPS khi triển khai | Kiểm cấu hình triển khai (AC-014) | BR-014 |
-| NFR-005 | Sẵn sàng | ≥ 95 % thời gian trong giờ 08:00–17:30, thứ Hai–thứ Sáu; RTO ≤ 1 ngày làm việc; RPO: không mất văn bản gốc (HC-NS giữ bản gốc, đưa lại được) | Diễn tập: xóa kho, đưa lại 3 văn bản mẫu, đo thời gian | ASM-003, ASM-005 (BRD §4.10; PO xác nhận qua OQ-005) |
-| NFR-006 | Tải đồng thời | 10 câu hỏi đồng thời không có lỗi (PO xác nhận, OQ-007) | Gửi 10 câu cùng lúc, đếm lỗi | BR-009 |
+| NFR-005 | Sẵn sàng | Dùng được trong giờ 08:00–17:30, thứ Hai–thứ Sáu; RTO ≤ 1 ngày làm việc; RPO: không mất văn bản gốc (HC-NS giữ bản gốc, đưa lại được) | Diễn tập: xóa kho, đưa lại 3 văn bản mẫu, đo thời gian | ASM-003, ASM-005 (BRD §4.10; PO xác nhận qua OQ-005) |
+| NFR-006 | Tải đồng thời | 10 câu hỏi đồng thời không có lỗi (PO xác nhận, SRC-006 D2) | Gửi 10 câu cùng lúc, đếm lỗi | BR-009 |
 | NFR-007 | Ngôn ngữ | 100 % chuỗi giao diện và thông báo lỗi bằng tiếng Việt | Kiểm tra giao diện | CON-04 (BRD §4.9; ràng buộc, không phải BR — PO chấp nhận) |
 | NFR-010 | Dung lượng | Kho ≤ 50 văn bản, mỗi văn bản ≤ 300 trang và ≤ 20 MB | Test FR-002, FR-016 | BRU-004 |
 | NFR-008 | Phân quyền | Không có (PO: mọi người dùng nội bộ có quyền như nhau, OQ-002); bảo vệ dựa vào NFR-004 | Inspection | BR-014 |
@@ -141,9 +143,9 @@ journey
 
 | Epic | Stories | FR |
 |---|---|---|
-| E1 Kho văn bản | US-001 (P0), US-002 (P0) | FR-001..005 |
-| E2 Tra cứu có căn cứ | US-003 (P0), US-004 (P0), US-005 (P0), US-006 (P1), US-008 (P0), US-009 (P1), US-010 (P0) | FR-006..013, FR-015 |
-| E3 Đo lường | US-007 (P0) | FR-014 |
+| E1 Kho văn bản | US-001 (P0), US-002 (P0) | FR-001..005, FR-016, FR-018 |
+| E2 Tra cứu có căn cứ | US-003 (P0), US-004 (P0), US-005 (P0), US-006 (P1), US-008 (P0), US-009 (P1), US-010 (P0) | FR-006..013, FR-015, FR-019, FR-020 |
+| E3 Đo lường | US-007 (P0) | FR-014, FR-017 |
 
 Chi tiết và Given-When-Then: [USER_STORIES.md](USER_STORIES.md).
 
@@ -160,7 +162,7 @@ Chi tiết và Given-When-Then: [USER_STORIES.md](USER_STORIES.md).
   - vùng chọn tệp ghi rõ giới hạn (10 tệp, 20 MB, 300 trang, chỉ PDF có lớp văn bản);
   - bảng gồm Tên văn bản (hoặc tên tệp), Số hiệu, Hiệu lực, Số trang, Trạng thái;
   - tự cập nhật khi còn văn bản Đang xử lý.
-- Câu trả lời ghi rõ "do AI tạo — hãy đối chiếu Điều khoản gốc".
+- Câu trả lời ghi rõ "Câu trả lời do hệ thống tự động tạo — hãy đối chiếu Điều khoản gốc".
 
 ### 4.2 Edge cases & error states
 
@@ -194,7 +196,7 @@ Chi tiết và Given-When-Then: [USER_STORIES.md](USER_STORIES.md).
 
 | Sự kiện | Trường | Dùng cho |
 |---|---|---|
-| Một bản ghi mỗi câu hỏi | thời điểm, thời gian trả lời, kết quả (ok / error), số căn cứ, số đoạn văn bản đã xét | MET-006, NFR-001, FR-014 |
+| Một bản ghi mỗi câu hỏi | thời điểm, thời gian trả lời, kết quả (ok / error), số căn cứ | MET-006, NFR-001, FR-014 |
 | Một sự kiện mỗi văn bản xử lý xong hoặc lỗi | mã văn bản, số trang, số Điều nhận diện được, mã lỗi, thời gian xử lý | NFR-002, FR-002 |
 
 Không có trường nào chứa câu hỏi, câu trả lời hay nội dung văn bản (NFR-003).
@@ -203,14 +205,14 @@ Không có trường nào chứa câu hỏi, câu trả lời hay nội dung vă
 
 BO → BR → FR/NFR → US: [traceability.md](traceability.md). Tóm tắt coverage:
 
-- 20 FR (FR-001..017, kèm FR-004b, FR-007b, FR-009b) và 10 NFR, 100 % trỏ về BR hoặc BRU/CON/ASM của BRD. NFR-005 và NFR-007 trỏ về ASM/CON, PO chấp nhận;
+- 20 FR (FR-001..020) và 10 NFR, 100 % trỏ về BR hoặc BRU/CON/ASM của BRD. NFR-005 và NFR-007 trỏ về ASM/CON, PO chấp nhận;
 - 16/16 BR có FR hoặc NFR;
 - 10 US, 100 % có AC và FR;
 - không có `[ORPHAN]`.
 
 | ID | Câu hỏi | Owner | Cần trước | Trạng thái |
 |---|---|---|---|---|
-| OQ-006 | Xác nhận target MET-007 và cỡ golden set (từ BRD) | PO | 2026-11-02 | **Đã quyết** 2026-11-02: PO xác nhận |
-| OQ-007 | Xác nhận ngưỡng NFR-002 và NFR-006 | PO | 2026-11-02 | **Đã quyết** 2026-11-02: PO xác nhận cả hai |
+| OQ-006 | Xác nhận target MET-007 và cỡ golden set (từ BRD) | PO | 2026-11-02 | **Đã quyết** 2026-11-02 (SRC-006 D3) |
+| OQ-007 | Xác nhận ngưỡng NFR-002 và NFR-006 | PO | 2026-11-02 | **Đã quyết** 2026-11-02 (SRC-006 D1, D2) |
 
 **Self-check (§6 của prompt):** objectives có baseline (hoặc lý do), target, cách đo; FR/NFR 100 % truy về BRD; US 100 % có AC; NFR là metric có ngưỡng; edge case cho P0 có ở §4.2; release criteria đo được. Điểm chính thức: [prd-audit.md](prd-audit.md).

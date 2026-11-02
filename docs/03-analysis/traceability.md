@@ -2,21 +2,21 @@
 
 | Mục | Giá trị |
 |---|---|
-| Version | 0.2 |
+| Version | 0.3 |
 | Owner | Phùng Duy Hùng (PO) |
 | Date | 2026-11-02 |
-| Nguồn | BRD v1.0 (`requirements-v1`), PRD v0.1, USER_STORIES v0.1 |
+| Nguồn | BRD v1.0 (`requirements-v1`), PRD v0.3, USER_STORIES v0.3 |
 | Chiều xuống tiếp theo | US/AC → TC → evidence: `docs/07-verification/RTM.md` |
 
 | BO | BR | FR / NFR | US | Design / Task / TC |
 |---|---|---|---|---|
 | — (SN-03) | BR-001 | FR-001, NFR-002 | US-001 | chặng 3–6 |
 | — (SN-03) | BR-002 | FR-002, FR-004, FR-016, NFR-010 | US-001, US-002 | |
-| — (SN-03, SN-04) | BR-003 | FR-003, FR-004, FR-004b | US-002 | |
+| — (SN-03, SN-04) | BR-003 | FR-003, FR-004, FR-018 | US-002 | |
 | BO-003 | BR-004 | FR-005, FR-006, FR-007, FR-013 | US-002, US-003, US-009 | |
-| BO-002 | BR-005 | FR-007b, FR-008 | US-003 | |
+| BO-002 | BR-005 | FR-019, FR-008 | US-003 | |
 | BO-002 | BR-006 | FR-009 | US-004 | |
-| BO-002 | BR-007 | FR-009b | US-004 | |
+| BO-002 | BR-007 | FR-020 | US-004 | |
 | BO-003 | BR-008 | FR-011 | US-005 | |
 | BO-001 | BR-009 | FR-015, NFR-001, NFR-006 | US-010 | |
 | — (SN-05) | BR-010 | FR-014, FR-017 | US-007 | |
