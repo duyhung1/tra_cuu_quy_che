@@ -16,7 +16,7 @@
 
 Ngày 2026-11-02, bản phát hành đầu tiên của TCQC (commit `8ae514b`) được kiểm thử ở bốn mức: unit + integration (46 test), hệ thống (golden set 17 câu), giao diện trên trình duyệt, inspection và diễn tập vận hành.
 
-Kết quả theo [RTM](RTM.md): 30 tiêu chí, gồm 28 PASS, 1 SKIP có lý do, 1 GAP có owner, 0 FAIL. 22/22 test case P0 PASS. Tiêu chí phát hành RC-1..RC-5 đạt. Một lỗi phát hiện trong lúc test (DEF-001) đã được sửa và kiểm lại. Hai lỗi Minor còn mở.
+Kết quả theo [RTM](RTM.md): 30 tiêu chí, gồm 27 PASS, 1 FAIL (TC-029, P1, DEF-002 Minor), 1 SKIP có lý do, 1 GAP có owner. 24/24 test case P0 PASS. Tiêu chí phát hành RC-1..RC-5 đạt. Một lỗi phát hiện trong lúc test (DEF-001) đã được sửa và kiểm lại. Hai lỗi Minor còn mở.
 
 ## 2. Scope and environment
 
@@ -73,7 +73,7 @@ Kết quả theo [RTM](RTM.md): 30 tiêu chí, gồm 28 PASS, 1 SKIP có lý do,
 |---|---|
 | RC-1 | Đạt |
 | RC-2 | Đạt |
-| RC-3 | Đạt (22/22 P0) |
+| RC-3 | Đạt (24/24 P0; TC-029 là P1) |
 | RC-4 | Đạt |
 | RC-5 | Đạt (`code-review.md`: 2 Major đã sửa, PO duyệt cổng Build) |
 | RC-6 | Chờ PO ký |
@@ -93,7 +93,7 @@ Kết quả theo [RTM](RTM.md): 30 tiêu chí, gồm 28 PASS, 1 SKIP có lý do,
 | ID | Mức | Mô tả | Yêu cầu | Trạng thái |
 |---|---|---|---|---|
 | DEF-001 | Major | SQLite connection không được đóng, khóa tệp CSDL trên Windows (TC-028) | NFR-005 | **Đã sửa** `8ae514b`, test hồi quy `test_store_releases_the_database_file` |
-| DEF-002 | Minor | Nút chọn tệp gốc của trình duyệt hiện chữ tiếng Anh "Choose Files / No file chosen" | NFR-007 | Mở; sửa bằng nút tùy chỉnh. Owner PO, backlog |
+| DEF-002 | Minor | Nút chọn tệp gốc của trình duyệt hiện chữ tiếng Anh "Choose Files / No file chosen"; TC-029 FAIL | NFR-007 | Mở; sửa bằng nút tùy chỉnh. Owner PO, hạn 2026-11-30 |
 | DEF-003 | Minor | Tệp bị từ chối trước khi mở PDF (không phải PDF, trùng tên, quá lớn, kho đầy) chỉ báo trong kết quả tải lên, không lưu vào danh sách | FR-004 | Mở; backlog |
 | CR-R-03..10 | Minor | 8 Minor của code review | — | Backlog (`code-review.md`) |
 

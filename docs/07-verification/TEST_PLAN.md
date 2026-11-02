@@ -54,8 +54,11 @@ Repo `duyhung1/tra_cuu_quy_che`, nhánh `restart`, commit ghi trong `run-id`. G�
 | Hệ thống (golden set) | `tests/golden/run_golden.py`, chấm tự động theo `expect_*`, PO duyệt kết quả | `.venv/Scripts/python tests/golden/run_golden.py --out <evidence>` |
 | UI | Trình duyệt tích hợp của Claude Code (agent điều khiển), chụp màn hình | Chạy `uvicorn app.main:app` với `TCQC_DB` tạm |
 | Inspection | Đọc cấu hình và code, đối chiếu NFR | Ghi vào `evidence/<run-id>/inspection.md` |
-| Diễn tập phục hồi | Xóa CSDL, đưa lại 3 văn bản, đo thời gian | Ghi vào `evidence/<run-id>/recovery.txt` |
+| Diễn tập phục hồi | Xóa CSDL, đưa lại 5 văn bản mẫu, đo thời gian | Ghi vào `evidence/<run-id>/recovery.txt` |
 
+- **Tự động:** lint, pytest, golden set, kiểm tra vận hành (`run_ops_checks.py`). **Agent thực hiện có ghi bằng chứng:** UI trên trình duyệt, inspection.
+- **Thứ tự theo rủi ro:** RSK-001 (luật hiệu lực, căn cứ) → NFR-003 (lộ nội dung) → các luồng lỗi → hiệu năng → UI.
+- **Điều kiện bắt đầu (entry):** cổng Build đã duyệt (`build-v1`), venv cài đủ phụ thuộc, dữ liệu mẫu đã commit.
 - Ngày tham chiếu cố định `TCQC_TODAY=2026-11-02`, để kết quả về hiệu lực tái lập được.
 - `run-id = <yyyymmdd-hhmm>-<commit7>-local-win`.
 
@@ -78,9 +81,11 @@ Repo `duyhung1/tra_cuu_quy_che`, nhánh `restart`, commit ghi trong `run-id`. G�
 ## 9.0 Test deliverables
 
 - `TEST_PLAN.md`, `TEST_CASES.md`, `RTM.md`, `TEST_REPORT.md`.
-- `evidence/<run-id>/`: `pytest.txt`, `ruff.txt`, `golden-results.json`, `app.log`, `leak-check.txt`, `ui-*.png`, `inspection.md`, `recovery.txt`.
+- `evidence/<run-id>/`: `pytest.txt`, `ruff.txt`, `golden-results.json`, `golden-console.txt`, `app.log`, `leak-check.txt`, `perf.txt`, `recovery.txt`, `ui-*.jpg`, `ui-*.txt`, `ui-app.log`, `inspection.md`.
 
 ## 10.0 Testing tasks
+
+Người thực hiện các bước 1–6: AI agent. Bước 7: PO.
 
 1. Chạy RC-1.
 2. Chạy golden set (RC-2, RC-4).
@@ -94,7 +99,7 @@ Repo `duyhung1/tra_cuu_quy_che`, nhánh `restart`, commit ghi trong `run-id`. G�
 
 Windows 10 Pro 19045, Python 3.13 (venv), FastAPI, PyMuPDF; trình duyệt Chromium tích hợp. Mạng: localhost.
 
-## 12.0 Responsibilities, 13.0 Staffing
+## 12.0 Responsibilities, 13.0 Staffing (không cần đào tạo thêm: agent và PO đã dùng đủ công cụ ở các chặng trước)
 
 | Vai trò | Người |
 |---|---|
@@ -111,6 +116,8 @@ Cùng ngày 2026-11-02, sau cổng Build (SDP MS-4).
 |---|---|
 | RSK-002 hết giờ | Giữ bằng chứng, cắt bề rộng: P1 UI có thể SKIP có lý do |
 | RSK-005 golden set đo trên thành phần trả lời nội bộ | Ghi rõ trong TEST_REPORT |
+
+**Self-check:** điểm chính thức theo `Test_Plan_IEEE_829_Checklist.xlsx` ở [test-audit.md](test-audit.md) (14 Pass, 4 Partial, 0 Fail; các Partial đã sửa trong phiên bản này).
 
 ## 16.0 Approvals
 

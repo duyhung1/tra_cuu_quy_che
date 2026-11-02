@@ -12,7 +12,7 @@ Dự án đi theo 8 chặng của bộ prompt và checklist [`sdlc-kit/`](sdlc-k
 | 3 Design (SAD, blueprint, sơ đồ) | [docs/04-design](docs/04-design) | Đã duyệt (`design-v1`) |
 | 4 Planning (kế hoạch, tasks) | [docs/05-development](docs/05-development) | Đã duyệt (`plan-v1`) |
 | 5 Build | `app/`, `web/`, `tests/` | Đã duyệt (`build-v1`) |
-| 6 Test (plan, cases, RTM) | [docs/07-verification](docs/07-verification) | Đã chạy, chờ PO |
+| 6 Test (plan, cases, RTM) | [docs/07-verification](docs/07-verification) | Đã duyệt (`verification-v1`) |
 | 7 Report (TEST_REPORT) | [TEST_REPORT.md](docs/07-verification/TEST_REPORT.md) | Chờ PO quyết GO/NO-GO |
 
 Tham số dùng để chạy từng prompt nằm trong [`prompts/`](prompts). Thay đổi sau baseline nằm trong [`docs/change-requests/`](docs/change-requests).

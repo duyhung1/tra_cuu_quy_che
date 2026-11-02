@@ -4,7 +4,7 @@
 |---|---|
 | ID | TCQC-RTM, version 1.0 |
 | Owner | Phùng Duy Hùng (PO) |
-| Tested commit | `8ae514b` (nhánh `restart`) |
+| Tested commit | `8ae514b` (nhánh `restart`; các commit sau chỉ đổi tài liệu) |
 | Environment | Windows 10 Pro 19045, Python 3.13, localhost; `TCQC_TODAY=2026-11-02` |
 | Run id | `20261102-2306-8ae514b-local-win` → bằng chứng ở [evidence/20261102-2306-8ae514b-local-win/](evidence/20261102-2306-8ae514b-local-win/) (gọi tắt `ev/`) |
 | Date | 2026-11-02 |
@@ -44,7 +44,7 @@ Chuỗi truy vết đầy đủ:
 | NFR-002: 20 trang ≤ 60 s | NFR-002 | — | TC-026 | PASS | `ev/perf.txt` (0,13 s) | — | |
 | AC-014: chỉ mạng nội bộ | NFR-004, NFR-008, NFR-009 (BR-014) | — | TC-027 | PASS | `ev/inspection.md` | — | Inspection |
 | NFR-005: phục hồi | NFR-005 | — | TC-028 | PASS | `ev/recovery.txt` | DEF-001 (đã sửa) | Lần chạy đầu phát hiện DEF-001 |
-| NFR-007: tiếng Việt | NFR-007 | — | TC-029 | PASS | `ev/ui-*.jpg`, `ev/inspection.md` | DEF-002 | |
+| NFR-007: tiếng Việt | NFR-007 | — | TC-029 | FAIL | `ev/ui-too-many.jpg` ("Choose Files"), `ev/inspection.md` | DEF-002 | P1. Mọi chuỗi của ứng dụng đều tiếng Việt; chỉ nút gốc của trình duyệt còn tiếng Anh |
 | RC-1: lint, kiến trúc | — | — | TC-030 | PASS | `ev/ruff.txt`, `ev/pytest.txt` (46 passed) | — | |
 | MET-001: người dùng ≤ 2 phút | BR-009 (BO-001) | — | — | GAP | — | — | Cần bấm giờ với người dùng thật (deferred). Owner: PO; hạn 2026-11-30 (cùng OQ-001) |
 
@@ -53,10 +53,10 @@ Chuỗi truy vết đầy đủ:
 | | Số lượng |
 |---|---|
 | Tiêu chí | 30 |
-| PASS | 28 |
+| PASS | 27 |
+| FAIL | 1 (TC-029, P1, DEF-002 Minor) |
 | SKIP | 1 (US-002-AC3, có lý do) |
 | GAP | 1 (MET-001, có owner và hạn) |
-| FAIL | 0 |
-| Test case P0 | 22/22 PASS |
+| Test case P0 | 24/24 PASS |
 
 Mọi BR-001..016 đều có ít nhất một tiêu chí PASS. Không có test case nào không truy được về yêu cầu.
