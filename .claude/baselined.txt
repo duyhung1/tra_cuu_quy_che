@@ -1,0 +1,2 @@
+# Artifacts baselined by the PO (prefix match from repo root). Added only after a gate is approved.
+docs/01-intake/
