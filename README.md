@@ -7,7 +7,7 @@ Dự án đi theo 8 chặng của bộ prompt và checklist [`sdlc-kit/`](sdlc-k
 | Chặng | Thư mục | Trạng thái |
 |---|---|---|
 | 0 Intake | [docs/01-intake](docs/01-intake) | Đã duyệt (`intake-v1`) |
-| 1 Requirements (BRD) | docs/02-requirements | Chưa bắt đầu |
+| 1 Requirements (BRD) | [docs/02-requirements](docs/02-requirements) | Đã duyệt (`requirements-v1`) |
 | 2 Analysis (PRD, User Stories) | docs/03-analysis | Chưa bắt đầu |
 | 3 Design (SAD, blueprint, sơ đồ) | docs/04-design | Chưa bắt đầu |
 | 4 Planning (kế hoạch, tasks) | docs/05-development | Chưa bắt đầu |

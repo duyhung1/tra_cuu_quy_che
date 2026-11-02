@@ -5,8 +5,8 @@
 | Mục | Giá trị |
 |---|---|
 | Document ID | TCQC-BRD |
-| Version | 0.2 |
-| Status | In review |
+| Version | 1.0 |
+| Status | Baselined — `requirements-v1` (PO, 2026-11-02) |
 | Author | AI agent (Claude Code), vai BA |
 | Owner / Approver | Phùng Duy Hùng (PO) |
 | Reviewers | Phùng Duy Hùng (PO); sub-agent `checklist-auditor` (audit, không duyệt) |
@@ -20,6 +20,7 @@
 |---|---|---|---|
 | 0.1 | 2026-11-02 | AI agent | Bản đầu từ intake-v1 và SRC-005 |
 | 0.2 | 2026-11-02 | AI agent | Sửa theo `brd-audit.md` vòng 1: tách metric, thêm vision, persona, kịch bản, BR-015..016, DEP/RSK, bỏ phần đề xuất chưa xác nhận ra khỏi rule chính thức |
+| 1.0 | 2026-11-02 | AI agent | PO xác nhận OQ-005 (P1–P4); MET-007 target và cỡ golden set chuyển sang OQ-006; PO duyệt baseline |
 
 ## 4.2 Executive summary
 
@@ -93,7 +94,7 @@ flowchart LR
 | BO-001 | Tốn thời gian tra cứu | Người dùng có quy định đang áp dụng nhanh hơn | MET-001, MET-006 | ~15 phút/lần (ASM-001) | ≤ 2 phút; p90 ≤ 30 giây | Nghiệm thu 2026-11-02 | SRC-002 |
 | BO-002 | Trích sai căn cứ | Căn cứ đúng Điều, đúng văn bản đang hiệu lực | MET-002, MET-003 | Không có (lý do: tra tay, chưa từng ghi nhận) | ≥ 80 % / 100 % | Nghiệm thu 2026-11-02 | SRC-001 |
 | BO-003 | Câu trả lời ngoài văn bản gây hiểu sai | Không đưa ra quy định không có trong văn bản | MET-004 | Không có (lý do như trên) | ≥ 90 % | Nghiệm thu 2026-11-02 | SRC-001 |
-| BO-004 | Câu hỏi lặp dồn vào HC-NS | Câu hỏi thường gặp được tự tra, không phải hỏi HC-NS | MET-005, MET-007 | ~20 câu/tuần (ASM-002) | −50 % sau 1 tháng; ≥ 80 % FAQ tự tra được | MET-007: nghiệm thu; MET-005: deferred | SRC-002 |
+| BO-004 | Câu hỏi lặp dồn vào HC-NS | Câu hỏi thường gặp được tự tra, không phải hỏi HC-NS | MET-005, MET-007 | ~20 câu/tuần (ASM-002) | −50 % sau 1 tháng; ≥ 80 % FAQ tự tra được [Unverified: OQ-006] | MET-007: nghiệm thu; MET-005: deferred | SRC-002 |
 
 | Metric | Định nghĩa | Công thức | Nguồn dữ liệu | Owner | Tần suất | Ngày baseline |
 |---|---|---|---|---|---|---|
@@ -105,7 +106,7 @@ flowchart LR
 | MET-005 | Số câu hỏi lặp gửi HC-NS mỗi tuần | đếm | Sổ yêu cầu HC-NS | PO | Hằng tuần | Chưa đo (OQ-001) |
 | MET-007 | Tỷ lệ câu hỏi thường gặp của HC-NS tự tra đúng được | đúng / số câu FAQ trong golden set | Golden set | PO | Như MET-002 | — |
 
-**Cỡ tối thiểu của golden set** (mẫu số của các tỷ lệ): ≥ 10 câu dương tính, trong đó ≥ 5 là câu hỏi thường gặp của HC-NS; ≥ 3 câu xung đột; ≥ 1 câu về văn bản chưa hiệu lực; ≥ 5 câu âm tính.
+**Cỡ tối thiểu của golden set** (mẫu số của các tỷ lệ) [Unverified: OQ-006]: ≥ 10 câu dương tính, trong đó ≥ 5 là câu hỏi thường gặp của HC-NS; ≥ 3 câu xung đột; ≥ 1 câu về văn bản chưa hiệu lực; ≥ 5 câu âm tính.
 
 ## 4.5 Scope
 
@@ -142,7 +143,7 @@ flowchart LR
 | STK-04 | Pháp chế / kế toán | Người dùng | Căn cứ chính xác, đúng hiệu lực | High | SN-04 | SRC-005 Q4 |
 | STK-05 | Giảng viên khóa học | Người chấm, có thể chặn nghiệm thu | Đủ artifact, truy vết, bằng chứng | High | SN-05 | SRC-003 |
 
-**Hồ sơ người dùng** (đề xuất của BA, PO xác nhận cùng OQ-005; số lượng: OQ-003):
+**Hồ sơ người dùng** (PO xác nhận 2026-11-02 qua OQ-005; số lượng: OQ-003):
 
 | Nhóm | Bối cảnh dùng | Tần suất | Hiểu biết về quy chế | Thiết bị |
 |---|---|---|---|---|
@@ -219,9 +220,9 @@ flowchart LR
 |---|---|---|---|---|---|
 | BRU-001 | Khi hai văn bản đang hiệu lực quy định khác nhau về cùng một việc, quy định của văn bản có ngày hiệu lực muộn hơn được áp dụng | Policy | Tra cứu | PO | SRC-001 |
 | BRU-002 | Văn bản ghi "hiệu lực kể từ ngày ký" có ngày hiệu lực bằng ngày ký | Decision | Kho văn bản | PO | glossary.md "Ngày hiệu lực" |
-| BRU-003 | Văn bản chưa đến ngày hiệu lực không thay thế quy định đang áp dụng | Policy | Tra cứu | PO | SRC-005 P3 [Unverified: OQ-005] |
-| BRU-004 | Một tệp tối đa 20 MB và 300 trang; tối đa 10 tệp mỗi lần; kho tối đa 50 văn bản | Decision | Kho văn bản | PO | SRC-005 P1 [Unverified: OQ-005] |
-| BRU-005 | Không nhận hai văn bản trùng tên tệp | Decision | Kho văn bản | PO | SRC-005 P4 [Unverified: OQ-005] |
+| BRU-003 | Văn bản chưa đến ngày hiệu lực không thay thế quy định đang áp dụng | Policy | Tra cứu | PO | SRC-005 P3; PO xác nhận 2026-11-02 (OQ-005) |
+| BRU-004 | Một tệp tối đa 20 MB và 300 trang; tối đa 10 tệp mỗi lần; kho tối đa 50 văn bản | Decision | Kho văn bản | PO | SRC-005 P1; PO xác nhận 2026-11-02 (OQ-005) |
+| BRU-005 | Không nhận hai văn bản trùng tên tệp | Decision | Kho văn bản | PO | SRC-005 P4; PO xác nhận 2026-11-02 (OQ-005) |
 
 ## 4.9 Constraints
 
@@ -241,21 +242,21 @@ flowchart LR
 |---|---|---|---|---|---|---|---|
 | ASM-001 | Baseline thời gian | Assumption | ~15 phút/lần là ước lượng | MET-001 sai lệch | PO | Đo thực tế (OQ-001) | 2026-11-30 |
 | ASM-002 | Baseline câu hỏi lặp | Assumption | ~20 câu/tuần là ước lượng | MET-005 sai lệch | PO | Đo thực tế (OQ-001) | 2026-11-30 |
-| ASM-003 | Mức sẵn sàng | Assumption | Dùng trong giờ hành chính 08:00–17:30, thứ Hai–thứ Sáu; ngừng ≤ 1 ngày làm việc là chấp nhận được khi dùng thử (SRC-005 P2) | Cần thiết kế dự phòng | PO | Xác nhận tại cổng (OQ-005) | 2026-11-02 |
+| ASM-003 | Mức sẵn sàng | Assumption | Dùng trong giờ hành chính 08:00–17:30, thứ Hai–thứ Sáu; ngừng ≤ 1 ngày làm việc là chấp nhận được khi dùng thử (SRC-005 P2) | Cần thiết kế dự phòng | PO | PO xác nhận 2026-11-02 (OQ-005) | 2026-11-02 |
 | ASM-004 | Văn bản có cấu trúc | Assumption | Văn bản dùng Chương/Điều/Khoản và ghi số hiệu, ngày hiệu lực | Không trích được Điều (BR-005) | PO | Kiểm bằng văn bản mẫu ở chặng Design | 2026-11-02 |
-| ASM-005 | Mất dữ liệu kho | Assumption | HC-NS giữ bản gốc mọi văn bản ngoài hệ thống. Nếu kho mất, đưa lại từ bản gốc trong ≤ 1 ngày làm việc (RPO: không mất văn bản gốc) | Phải sao lưu kho | PO | Xác nhận tại cổng (OQ-005) | 2026-11-02 |
+| ASM-005 | Mất dữ liệu kho | Assumption | HC-NS giữ bản gốc mọi văn bản ngoài hệ thống. Nếu kho mất, đưa lại từ bản gốc trong ≤ 1 ngày làm việc (RPO: không mất văn bản gốc) | Phải sao lưu kho | PO | PO xác nhận 2026-11-02 (OQ-005) | 2026-11-02 |
 | DEP-001 | Dịch vụ hiểu ngôn ngữ | Dependency | Cần một dịch vụ được phép nhận nội dung văn bản (giả lập) để tạo câu trả lời | Không có BR-004..009 | PO | Chọn ở chặng Design (ADR) | 2026-11-02 |
 | DEP-002 | Bộ văn bản mẫu | Dependency | Văn bản giả lập có Chương/Điều/Khoản, có ít nhất một cặp xung đột, một văn bản chưa hiệu lực và một văn bản chứa chỉ dẫn giả | Không kiểm được AC-006, AC-012, AC-013, AC-015 | PO | Soạn ở chặng Analysis/Design | 2026-11-02 |
 | DEP-003 | Golden set và người chấm | Dependency | Bộ câu hỏi đủ cỡ §4.4; PO chấm cột "đúng" | Không đo được MET-002..004, MET-007 | PO | Soạn ở chặng Test | 2026-11-02 |
 | DEP-004 | Môi trường mạng nội bộ | Dependency | Một máy chạy được hệ thống, chỉ truy cập trong mạng nội bộ (giả lập bằng máy cục bộ) | Không kiểm được AC-014 | PO | Chuẩn bị ở chặng Build | 2026-11-02 |
 | DEP-005 | PO có mặt ở mọi cổng | Dependency | PO duyệt 8 cổng trong ngày | Trễ hạn CON-01 | PO | Duyệt ngay trong phiên làm việc | 2026-11-02 |
 
-| ID | Rủi ro | Mức độ | Giảm thiểu | Dự phòng | Owner |
-|---|---|---|---|---|---|
-| RSK-001 | Trích sai Điều hoặc văn bản đã bị thay | High | BR-005..007; đo MET-002/003 trước GO | NO-GO nếu MET-003 < 100 %; ghi lỗi và sửa | PO |
-| RSK-002 | Không kịp kiểm thử thật | High | Cắt bề rộng, giữ bằng chứng | Kết luận NO-GO có điều kiện và ghi rõ phần chưa kiểm | PO |
-| RSK-003 | Văn bản chứa chỉ dẫn xấu | Medium | BR-012, AC-012 | Gỡ văn bản xấu khỏi kho thủ công | PO |
-| RSK-004 | Nội dung văn bản gửi ra dịch vụ bên ngoài (DEP-001) | Medium | Chỉ dữ liệu giả lập (CON-02); chọn nhà cung cấp ở ADR | Khi dùng thật: đổi sang dịch vụ được phép hoặc dịch vụ trong công ty | PO |
+| ID | Rủi ro | Mức độ | Giảm thiểu | Dự phòng | Owner | Due |
+|---|---|---|---|---|---|---|
+| RSK-001 | Trích sai Điều hoặc văn bản đã bị thay | High | BR-005..007; đo MET-002/003 trước GO | NO-GO nếu MET-003 < 100 %; ghi lỗi và sửa | PO | 2026-11-02 |
+| RSK-002 | Không kịp kiểm thử thật | High | Cắt bề rộng, giữ bằng chứng | Kết luận NO-GO có điều kiện và ghi rõ phần chưa kiểm | PO | 2026-11-02 |
+| RSK-003 | Văn bản chứa chỉ dẫn xấu | Medium | BR-012, AC-012 | Quản trị viên gỡ văn bản xấu trực tiếp khỏi kho; đây là thao tác vận hành, không phải tính năng (gỡ văn bản là Deferred) | PO | 2026-11-02 |
+| RSK-004 | Nội dung văn bản gửi ra dịch vụ bên ngoài (DEP-001) | Medium | Chỉ dữ liệu giả lập (CON-02); chọn nhà cung cấp ở ADR | Khi dùng thật: đổi sang dịch vụ được phép hoặc dịch vụ trong công ty | PO | 2026-11-02 |
 
 **Continuity:** ASM-003, ASM-005. **Security:** BR-011, BR-014; không có dữ liệu cá nhân (CON-02). **Compliance:** không có quy định pháp lý áp dụng cho dữ liệu giả lập [Source: `prompts/01-intake.md` REGULATORY_CONTEXT].
 
@@ -264,10 +265,10 @@ flowchart LR
 | BO / SN | Requirements | AC | Metric | Chiều xuống (FR / US) |
 |---|---|---|---|---|
 | BO-001 / SN-01 | BR-009 | AC-009 | MET-001, MET-006 | PRD (chặng 2) |
-| BO-002 / SN-04 | BR-005, BR-006, BR-007, BR-013, BR-015 | AC-005..007, AC-013, AC-015 | MET-002, MET-003 | PRD |
+| BO-002 / SN-04 | BR-005, BR-006, BR-007, BR-013 (SN-04), BR-015 (SN-04) | AC-005..007, AC-013, AC-015 | MET-002, MET-003 | PRD |
 | BO-003 / SN-01, SN-04 | BR-004, BR-008 | AC-004, AC-008 | MET-004 | PRD |
 | BO-004 / SN-02 | BR-016 | AC-016 | MET-007 (MET-005 deferred) | PRD |
-| SN-03 | BR-001, BR-002, BR-003 | AC-001..003 | — | PRD |
+| SN-03 (BR-003 cả SN-04) | BR-001, BR-002, BR-003 | AC-001..003 | — | PRD |
 | SN-04 / RSK-003 | BR-012 | AC-012 | — | PRD |
 | SN-05 | BR-010 | AC-010 | MET-002..004, MET-006 | PRD |
 | SN-06 | BR-011, BR-014 | AC-011, AC-014 | — | PRD |
@@ -285,7 +286,8 @@ flowchart LR
 | OQ-002 | Ai được đưa văn bản vào? | Quyết định có cần phân quyền | PO | 2026-11-02 | **Đã quyết** 2026-11-02: mọi người dùng nội bộ (SRC-005 Q7) |
 | OQ-003 | Số người dùng mỗi nhóm | Cỡ hệ thống | PO | 2026-11-30 | Mở, không chặn |
 | OQ-004 | Định dạng đầu vào? | Phạm vi trích xuất | PO | 2026-11-02 | **Đã quyết** 2026-11-02: chỉ PDF có lớp văn bản (SRC-005 Q8) |
-| OQ-005 | Xác nhận đề xuất P1 (BRU-004), P2 (ASM-003, ASM-005), P3 (BRU-003), P4 (BRU-005) và hồ sơ người dùng §4.6 | Các rule đang `[Unverified]` | PO | 2026-11-02 (cổng BRD) | Mở, **chặn baseline** |
+| OQ-005 | Xác nhận đề xuất P1 (BRU-004), P2 (ASM-003, ASM-005), P3 (BRU-003), P4 (BRU-005) và hồ sơ người dùng §4.6 | Các rule đang `[Unverified]` | PO | 2026-11-02 (cổng BRD) | **Đã quyết** 2026-11-02: PO xác nhận cả P1–P4 và hồ sơ người dùng |
+| OQ-006 | Xác nhận target MET-007 (≥ 80 %) và cỡ tối thiểu của golden set §4.4 | Mẫu số của các tỷ lệ nghiệm thu | PO | Trước chặng Test | Mở, không chặn |
 
 ## 4.13 Glossary and references
 
@@ -312,7 +314,7 @@ Thuật ngữ gốc: [`docs/01-intake/glossary.md`](../01-intake/glossary.md) (`
 
 | Vai trò | Tên | Quyết định | Ngày |
 |---|---|---|---|
-| PO / Approver | Phùng Duy Hùng | _(chờ)_ | |
+| PO / Approver | Phùng Duy Hùng | Duyệt có điều kiện; điều kiện đạt (audit vòng 2: 0 Fail, 0 Blocking; OQ-005 đã quyết) → baseline `requirements-v1` | 2026-11-02 |
 
 ## 4.15 Appendix
 
@@ -320,4 +322,4 @@ Thuật ngữ gốc: [`docs/01-intake/glossary.md`](../01-intake/glossary.md) (`
 
 **Self-check** (§6 của prompt): mọi BO có BR và metric; mọi BR dùng "shall", một nghĩa vụ, không nêu giải pháp; mọi BR có AC và cách kiểm; không có orphan. Điểm chính thức theo checklist: [`brd-audit.md`](brd-audit.md).
 
-**Readiness:** `Ready with conditions`. Điều kiện chặn: OQ-005.
+**Readiness:** `Ready for review` → **Baselined** (`requirements-v1`). Không còn mục chặn; OQ-001, OQ-003, OQ-006 mở, không chặn.
