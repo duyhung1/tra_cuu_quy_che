@@ -3,8 +3,8 @@
 | Mục | Giá trị |
 |---|---|
 | ID | WI-001 |
-| Phiên bản | 0.1 |
-| Trạng thái | Chờ PO xác nhận intake |
+| Phiên bản | 1.0 |
+| Trạng thái | Đã duyệt — baseline `intake-v1` (PO, 2026-11-02) |
 | Owner | Phùng Duy Hùng (PO) |
 | Ngày | 2026-11-02 |
 | Prompt | `sdlc-kit/requirements/Intake_Intent_Prompt.md` v2.0 |
@@ -44,18 +44,18 @@
 | 1 | Có human owner, tiêu chí chấp nhận và risk tier | Pass | WI-001 §Thông tin, §Tiêu chí chấp nhận; intent.md §Risk tier |
 | 2 | Mỗi success measure có baseline, target, cách đo | Pass | intent.md §5: SM-01..05. Baseline chưa có ghi "Chưa có"; baseline ước lượng gắn ASM-001/002 |
 | 3 | Out of scope ghi rõ; mọi nguồn có SRC-xxx | Pass | intent.md §6; sources.md SRC-001..004 |
-| 4 | Mọi câu hỏi mở có người trả lời và hạn; không câu hỏi chặn phạm vi nào bị bỏ ngỏ | Partial | OQ-002, OQ-004 chặn phạm vi. Owner: PO; hạn: 2026-11-02, trả lời tại cổng này |
+| 4 | Mọi câu hỏi mở có người trả lời và hạn; không câu hỏi chặn phạm vi nào bị bỏ ngỏ | Pass | OQ-002, OQ-004 đã được PO trả lời ngày 2026-11-02 (intent.md §7); OQ-001, OQ-003 không chặn, có owner và hạn |
 | 5 | Không chứa giải pháp, công nghệ, kiến trúc hay ước lượng công sức | Pass | intent.md không nêu công nghệ; "dựa trên văn bản", "căn cứ" là kết quả mong muốn |
-| 6 | Requester xác nhận problem và outcome đúng ý | Partial | Chờ PO xác nhận tại cổng. Owner: PO; hạn: 2026-11-02 |
+| 6 | Requester xác nhận problem và outcome đúng ý | Pass | PO xác nhận ngày 2026-11-02 (§Bàn giao) |
 
-Kết quả: 4 Pass, 2 Partial (cả hai cần PO trả lời tại cổng), 0 Fail.
+Kết quả: 6 Pass, 0 Partial, 0 Fail.
 
 ## Bàn giao (handoff) sang chặng 1 — Requirements
 
 | Trường | Giá trị |
 |---|---|
-| Trạng thái | Chờ PO xác nhận intake và trả lời OQ-002, OQ-004 |
+| Trạng thái | Đã bàn giao sang chặng 1 |
 | Bằng chứng | `docs/01-intake/*`, commit và tag `intake-v1` sau khi duyệt |
 | Người nhận | Phùng Duy Hùng (PO), vai trò chủ yêu cầu ở chặng 1 |
 | Rủi ro còn mở | RSK-001, RSK-002 |
-| Xác nhận của PO | _(điền khi duyệt: tên, ngày, quyết định)_ |
+| Xác nhận của PO | Phùng Duy Hùng, 2026-11-02: duyệt intake, cho phép baseline `intake-v1` và sang BRD |

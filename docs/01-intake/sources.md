@@ -3,8 +3,8 @@
 | Mục | Giá trị |
 |---|---|
 | ID tài liệu | INT-SRC |
-| Phiên bản | 0.1 |
-| Trạng thái | Bản nháp — chờ PO duyệt |
+| Phiên bản | 1.0 |
+| Trạng thái | Đã duyệt — baseline `intake-v1` (PO, 2026-11-02) |
 | Owner | Phùng Duy Hùng (PO) |
 | Ngày | 2026-11-02 |
 | Prompt | `sdlc-kit/requirements/Intake_Intent_Prompt.md` v2.0 |

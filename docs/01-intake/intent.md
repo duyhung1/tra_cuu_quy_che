@@ -3,8 +3,8 @@
 | Mục | Giá trị |
 |---|---|
 | ID tài liệu | INT-001 |
-| Phiên bản | 0.1 |
-| Trạng thái | Bản nháp — chờ PO duyệt |
+| Phiên bản | 1.0 |
+| Trạng thái | Đã duyệt — baseline `intake-v1` (PO, 2026-11-02) |
 | Owner | Phùng Duy Hùng (PO) |
 | Ngày | 2026-11-02 |
 | Prompt | `sdlc-kit/requirements/Intake_Intent_Prompt.md` v2.0 |
@@ -73,9 +73,9 @@ Người dùng đặt câu hỏi bằng tiếng Việt và nhận ngay câu tr�
 | ID | Câu hỏi | Người trả lời | Cần trước | Chặn phạm vi? |
 |---|---|---|---|---|
 | OQ-001 | Đo thực tế baseline thời gian tra cứu và số câu hỏi lặp (thay cho ASM-001/002) | PO | 2026-11-30 | Không |
-| OQ-002 | Ai được đưa văn bản vào hệ thống: mọi người dùng nội bộ hay chỉ hành chính – nhân sự? Không có đăng nhập thì không phân biệt được người | PO | 2026-11-02 (trước BRD) | Có |
+| OQ-002 | Ai được đưa văn bản vào hệ thống: mọi người dùng nội bộ hay chỉ hành chính – nhân sự? Không có đăng nhập thì không phân biệt được người | PO | 2026-11-02 (trước BRD) | **Đã trả lời 2026-11-02:** mọi người dùng nội bộ; truy cập giới hạn ở mạng nội bộ (CON-05); phân quyền để giai đoạn sau |
 | OQ-003 | Số người dùng của từng nhóm | PO | 2026-11-30 | Không |
-| OQ-004 | Định dạng văn bản đầu vào: chỉ PDF có lớp văn bản là đủ cho giai đoạn này? | PO | 2026-11-02 (trước BRD) | Có |
+| OQ-004 | Định dạng văn bản đầu vào: chỉ PDF có lớp văn bản là đủ cho giai đoạn này? | PO | 2026-11-02 (trước BRD) | **Đã trả lời 2026-11-02:** chỉ PDF có lớp văn bản; PDF scan báo lỗi rõ ràng |
 
 ### Giả định
 
