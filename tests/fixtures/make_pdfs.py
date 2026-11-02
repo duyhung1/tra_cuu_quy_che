@@ -129,7 +129,10 @@ def fake_pdf() -> bytes:
     return b"PK\x03\x04 day la tep docx doi ten thanh pdf"
 
 
-def write_all() -> None:
+def write_all(force: bool = False) -> None:
+    """Write the fixtures once; committed files are reused so test runs leave the tree clean."""
+    if not force and (HERE / "sample").exists() and (HERE / "bad").exists():
+        return
     (HERE / "sample").mkdir(parents=True, exist_ok=True)
     (HERE / "bad").mkdir(parents=True, exist_ok=True)
     for name, pages in SAMPLE_DOCS.items():
@@ -141,5 +144,5 @@ def write_all() -> None:
 
 
 if __name__ == "__main__":
-    write_all()
+    write_all(force=True)
     print("fixtures written to", HERE)

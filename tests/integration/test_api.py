@@ -126,3 +126,18 @@ def test_rebuild_during_questions_never_fails(client, pdfs):
         futures = [ex.submit(upload, i) for i in range(4)] + [ex.submit(ask, i) for i in range(20)]
         codes = [f.result() for f in futures]
     assert set(codes) == {200}
+
+
+def test_store_releases_the_database_file(settings, pdfs):
+    """DEF-001: every connection is closed, so the DB file can be deleted (recovery drill, NFR-005)."""
+    import os
+
+    from app import wiring
+
+    store, ing, _ = wiring.build(settings)
+    ing.ingest_batch([(p.name, p.read_bytes()) for p in sorted((pdfs / "sample").glob("*.pdf"))])
+    assert store.count() == 5
+    for suffix in ("", "-wal", "-shm"):
+        if os.path.exists(settings.db_path + suffix):
+            os.remove(settings.db_path + suffix)
+    assert not os.path.exists(settings.db_path)

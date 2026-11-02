@@ -4,6 +4,8 @@ ask_log stores numbers only — never question or answer text (NFR-003)."""
 import os
 import sqlite3
 import threading
+from collections.abc import Iterator
+from contextlib import contextmanager
 from datetime import UTC, date, datetime
 
 from app.domain.types import Amendment, Document, ParsedDocument, Unit, UsageRecord
@@ -56,11 +58,17 @@ class SqliteStore:
             c.execute("PRAGMA journal_mode=WAL")
             c.executescript(SCHEMA)
 
-    def _conn(self) -> sqlite3.Connection:
+    @contextmanager
+    def _conn(self) -> Iterator[sqlite3.Connection]:
+        """Commit on success, roll back on error, and always close (DEF-001: leaked handles locked the file)."""
         c = sqlite3.connect(self.path, timeout=10)
-        c.execute("PRAGMA foreign_keys=ON")
-        c.row_factory = sqlite3.Row
-        return c
+        try:
+            c.execute("PRAGMA foreign_keys=ON")
+            c.row_factory = sqlite3.Row
+            with c:
+                yield c
+        finally:
+            c.close()
 
     def count(self) -> int:
         with self._conn() as c:
