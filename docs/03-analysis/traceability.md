@@ -2,7 +2,7 @@
 
 | Mục | Giá trị |
 |---|---|
-| Version | 0.3 |
+| Version | 1.0 |
 | Owner | Phùng Duy Hùng (PO) |
 | Date | 2026-11-02 |
 | Nguồn | BRD v1.0 (`requirements-v1`), PRD v0.3, USER_STORIES v0.3 |

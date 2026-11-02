@@ -1,71 +1,61 @@
-# PRD audit — TCQC-PRD v0.2 (vòng 2)
+# PRD audit — TCQC-PRD v0.3 (vòng 3, vòng cuối)
 
 | Mục | Giá trị |
 |---|---|
-| Audit ID | TCQC-PRD-AUDIT-02 (vòng 1: TCQC-PRD-AUDIT-01, trong git `5eb70a0`) |
+| Audit ID | TCQC-PRD-AUDIT-03 (vòng 1: `5eb70a0`; vòng 2: `617a1a1`) |
 | Date | 2026-11-02 |
 | Auditor | checklist-auditor sub-agent (audit, không duyệt; PO duyệt) |
-| Artifact | `docs/03-analysis/PRD.md` v0.2 + `USER_STORIES.md` v0.2 + `traceability.md` v0.2 (commit `5eb70a0`) |
+| Artifact | `docs/03-analysis/PRD.md` v0.3 + `USER_STORIES.md` v0.3 + `traceability.md` v0.3 + `decisions/SRC-006.md` (commit `617a1a1`) |
 | Checklist | `sdlc-kit/analysis/PRD_IEEE_29148_Checklist.xlsx` (kit commit `6996dae`), 20 dòng |
 | Prompt | `sdlc-kit/analysis/PRD_Prompt_IEEE_standard.md` v2.0 |
 | Upstream | `docs/02-requirements/BRD.md` v1.0, tag `requirements-v1` (không khác tag) |
 
 Owner: **Phùng Duy Hùng (PO)**; due **2026-11-02** (CON-01).
 
-## 1. Round 1 → Round 2
+## 1. Round 2 → Round 3
 
-| # | Item | V1 | V2 | Lý do |
+| # | Item | V2 | V3 | Evidence |
 |---|---|---|---|---|
-| 1 | Purpose & Scope | Partial | Pass | §1.3 Scope + boundary |
-| 4 | Operating Environment | Partial | Pass | §1.3 trình duyệt, ≥ 1280 px, DEP-004 |
-| 5 | Singular & Complete | Partial | Pass | Tách FR-004b, FR-007b, FR-009b |
-| 6 | Implementation-Free | Partial | Partial | §5.2 đã sửa; thiết kế mới lọt vào §1.3/§1.4 (xem dưới) |
-| 7 | Verifiable | Partial | Pass | FR-015 "quá 30 giây"; OQ-006 ghi đã quyết |
-| 8 | Performance & Capacity | Partial (B) | Pass | NFR-002 hết `[Unverified]`; OQ-007 ghi đã quyết |
-| 9 | Security & Privacy | Partial | Pass | NFR-009; RSK-004 xử lý ở §1.3 |
-| 10 | Reliability & Availability | Partial | Partial | Có % uptime + RPO, nhưng 95 % không có nguồn |
-| 11 | Scalability | Partial (B) | Pass | NFR-006 xác nhận; NFR-010 |
-| 14 | Software Interfaces | **Fail** | Pass | §1.4 IF-01..IF-04 |
-| 15 | Communication Interfaces | Partial | Pass | §1.4: HTTP cục bộ, HTTPS khi triển khai, không kênh ra ngoài |
-| 16 | Design Constraints | Partial | Pass | §1.3 CON-01..07, không có quy định pháp lý |
-| 17 | Dependencies | **Fail** | Partial (B) | §1.3 có DEP-001..005; quyết định DEP-001 chưa có bản ghi, đổi rủi ro đã baseline |
-| 18 | Unambiguous Language | Partial | Pass | §1.1 "≤ 2 phút"; FR-015 30 giây |
-| 19 | Traceable & Numbered | Partial | Partial | NFR-005/007 đã giải thích; còn lỗi ID và ma trận cũ |
-| 20 | Consistent | Partial | Partial | Đã sửa thông điệp FR-001; phát sinh mâu thuẫn mới |
+| 6 | Implementation-Free | Partial | Pass | §1.3 DEP-001: "cách tạo câu trả lời được quyết ở ADR"; §5.2 bỏ "số đoạn" |
+| 17 | Dependencies | Partial (B) | Pass | SRC-006 D1–D4 ghi quyết định; RSK-004 vẫn mở, BRD không đổi (SRC-006 cuối trang, §1.3) |
+| 19 | Traceable & Numbered | Partial | Pass | FR-018/019/020; §3.3 đủ FR; traceability "Nguồn: PRD v0.3" |
+| 10 | Reliability & Availability | Partial | Partial | Đã bỏ 95 % không nguồn; giờ không còn cam kết % uptime nào |
+| 20 | Consistent | Partial | Partial | Các lỗi vòng 2 đã sửa (§4.1, FR-002, US-001-AC6, US-007-AC1..4); có 2 mâu thuẫn mới từ SRC-006 |
 
-Không đổi: #2, #3, #12 Pass; #13 N/A.
+Không đổi: 15 dòng Pass, #13 Hardware Interfaces N/A.
 
 ## 2. Các dòng còn Partial
 
 | # | Item | Evidence | Action | Gate |
 |---|---|---|---|---|
-| 17 | Dependencies | §1.3 DEP-001: quyết định PO không có bản ghi nguồn (chỉ có `interviews/SRC-005.md`); "RSK-004 không còn áp dụng" đổi BRD §4.10 đã baseline mà không qua C1 | Ghi quyết định PO (OQ-006, OQ-007, DEP-001) vào một SRC/biên bản; ghi việc đóng RSK-004 qua change request cho BRD hoặc ADR | **Blocking** |
-| 6 | Implementation-Free | §1.3 "thành phần chạy trong hệ thống, theo quy tắc, hoán đổi được"; IF-04 "các đoạn văn bản tìm được"; §5.2 "số đoạn văn bản đã xét" | Chuyển cách hiện thực sang ADR ở Design; PRD chỉ giữ "không gửi nội dung ra ngoài công ty" | Non-blocking |
-| 10 | Reliability & Availability | NFR-005 "≥ 95 %" ghi nguồn ASM-003/ASM-005/OQ-005, nhưng các mục đó không có số 95 % | PO xác nhận 95 % (ghi nguồn) hoặc bỏ | Non-blocking |
-| 19 | Traceable & Numbered | ID có hậu tố FR-004b/007b/009b ngoài scheme `FR-xxx` (guide A9); §3.3 thiếu FR-004b, 007b, 009b, 016, 017; traceability "Nguồn: PRD v0.1" | Đặt ID mới FR-018..020 (giữ ID cũ), cập nhật §3.3 và dòng Nguồn | Non-blocking |
-| 20 | Consistent | §4.1 "do AI tạo" ≠ §1.3 "theo quy tắc"; FR-002 vẫn có "kho đã đủ 50" trùng FR-016; US-007-AC1/AC2 dùng `latency`, `cited_count`, "CSDL" ≠ §5.2/NFR-003; FR-016/FR-017 được gắn vào US nhưng không có AC nào | Thống nhất nhãn câu trả lời; bỏ lý do 50 khỏi FR-002; cập nhật US-007; thêm AC cho FR-016 (US-001) và FR-017 (US-007) | Non-blocking |
+| 10 | Reliability & Availability | NFR-005 "Dùng được trong giờ 08:00–17:30" — có khung giờ, RTO, RPO nhưng không có % uptime | Ghi rõ "không cam kết % uptime trong capstone (ASM-003)" hoặc PO chọn một con số qua SRC | Non-blocking |
+| 20 | Consistent | (a) SRC-006 D4 (adapter giả) + D5 (không có khóa API) ≠ RC-2: chưa nói golden set MET-002..004 được đo trên thành phần nào; (b) SRC-006 D7 (agent tự baseline cổng 3–6) ≠ BRD CON-07 "Agent không tự duyệt hay baseline" mà §1.3 nói là áp dụng | (a) Thêm RSK/OQ: RC-2 đo trên adapter giả thì chỉ chứng minh luồng, không chứng minh chất lượng; (b) PO đổi CON-07 qua C1 hoặc rút lại D7 trước cổng 3 | Non-blocking cho cổng PRD; (b) phải xong trước cổng 3 |
 
 ## 3. Tổng kết
 
 | Pass | Partial | Fail | N/A | Tổng |
 |---|---|---|---|---|
-| 14 | 5 | 0 | 1 | 20 |
+| 17 | 2 | 0 | 1 | 20 |
 
-**Blocking:** #17 Dependencies (Partial).
+**Blocking:** không có.
 
 ## 4. Self-check (§6) và rule của prompt
 
 | Mục | Kết quả |
 |---|---|
-| OQ có owner và ngày | Đạt (OQ-006, OQ-007: 2026-11-02, Đã quyết) |
-| Baseline có giá trị hoặc lý do | Đạt (§1.2) |
-| FR/NFR → BR, orphan có giải thích | Đạt (NFR-005, NFR-007: PO chấp nhận, §6) |
-| Edge case cho P0 | Đạt (§4.2 thêm FR-016, FR-017) |
-| Self-check được báo kèm artifact | Đạt (§6 trỏ tới audit này) |
-| §5 giữ cấu trúc, nêu mục được thêm | Vi phạm nhẹ: §1.3/§1.4 đặt trước §1.2; document control không nói đã thêm mục |
-| §4 không nêu kiến trúc | Vi phạm (#6) |
-| Stop condition: quyết định thiết kế/phạm vi phải được báo cáo, không tự làm | Cần bản ghi quyết định của PO (#17) |
+| Objectives có baseline/lý do, target, cách đo | Đạt (§1.2, đã về đúng thứ tự) |
+| FR/NFR → BR; orphan có giải thích | Đạt (20 FR, 10 NFR; NFR-005/007 PO chấp nhận) |
+| US có AC và FR | Đạt (10/10; FR-016 → US-001-AC6, FR-017 → US-007-AC4) |
+| NFR có ngưỡng và cách đo | Đạt (NFR-005 xem #10) |
+| Edge case cho P0 | Đạt (§4.2) |
+| Release criteria đo được | Đạt về hình thức; ý nghĩa của RC-2 khi dùng adapter giả: #20 (a) |
+| §5 cấu trúc, khai báo mục thêm | Đạt (document control "Thay đổi 0.3") |
+| Quyết định có nguồn mở được | Đạt (SRC-006; người ghi là agent, PO xác nhận khi tự đọc PRD theo D6) |
 
 ## 5. Verdict
 
-**Not gate ready**: 0 Fail, nhưng còn 1 Partial Blocking (#17). Khi PO có bản ghi nguồn cho các quyết định và ghi việc đóng RSK-004 qua C1/ADR, gói này đủ điều kiện để PO xét duyệt. 4 Partial Non-blocking còn lại có owner và due date. Quyết định duyệt thuộc PO.
+**Gate ready**: 0 Fail, 0 Blocking. 2 Partial Non-blocking có owner và due date; #20 (b) (D7 so với CON-07) cần PO xử lý trước cổng 3. Theo SRC-006 D6, PO tự đọc PRD trước khi duyệt. Auditor không duyệt.
+
+## Quyết định tại cổng (2026-11-02)
+
+PO đọc PRD v0.3 và duyệt (SRC-006 D9). Partial #10 và #20(a) được ghi vào PRD v1.0 (NFR-005, RSK-005). #20(b) được giải quyết bằng SRC-006 D8: rút D7, PO duyệt từng cổng. Baseline `analysis-v1`.

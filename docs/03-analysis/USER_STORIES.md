@@ -3,7 +3,7 @@
 | Mục | Giá trị |
 |---|---|
 | Document ID | TCQC-US |
-| Version | 0.3 |
+| Version | 1.0 |
 | Status | In review |
 | Owner / Approver | Phùng Duy Hùng (PO) |
 | Date | 2026-11-02 |

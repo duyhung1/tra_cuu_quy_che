@@ -3,8 +3,8 @@
 | Mục | Giá trị |
 |---|---|
 | Document ID | TCQC-PRD |
-| Version | 0.3 |
-| Status | In review (audit vòng 3) |
+| Version | 1.0 |
+| Status | Baselined — `analysis-v1` (PO, 2026-11-02, SRC-006 D9) |
 | Owner / Approver | Phùng Duy Hùng (PO) |
 | Author | AI agent (Claude Code) |
 | Date | 2026-11-02 |
@@ -12,6 +12,7 @@
 | Đầu vào | `docs/02-requirements/BRD.md` v1.0 (`requirements-v1`); `docs/01-intake/glossary.md`, `stakeholders.md` (`intake-v1`) |
 | Thay đổi 0.2 | Sửa theo `prd-audit.md` vòng 1; ghi quyết định PO về OQ-006, OQ-007, DEP-001 (2026-11-02) |
 | Thay đổi 0.3 | Sửa theo vòng 2: biên bản SRC-006; thêm §1.3 Scope và §1.4 Interfaces (khai báo theo §5 output contract); đổi FR-004b/007b/009b → FR-018/019/020; bỏ 95 % chưa có nguồn |
+| Thay đổi 1.0 | Ghi hai Partial không chặn của vòng 3 (NFR-005, RSK-005); PO duyệt |
 | Nguồn quyết định | [decisions/SRC-006.md](decisions/SRC-006.md) |
 | User stories | [USER_STORIES.md](USER_STORIES.md) |
 | Truy vết | [traceability.md](traceability.md) |
@@ -133,7 +134,7 @@ journey
 | NFR-003 | Bảo mật nội dung | 0 lần nội dung câu hỏi, câu trả lời, văn bản xuất hiện trong log hay nơi lưu số liệu | Tìm chuỗi câu hỏi mẫu trong log và nơi lưu số liệu sau khi chạy (AC-011) | BR-011 |
 | NFR-009 | Mã hóa | Không áp dụng trong capstone: dữ liệu giả lập (CON-02), không có kênh ra ngoài (DEP-001). Khi dùng thật: HTTPS (NFR-004) và mã hóa nơi lưu văn bản | Inspection | BR-011, BR-014 |
 | NFR-004 | Phạm vi truy cập | Chỉ dải mạng nội bộ; giao tiếp qua HTTPS khi triển khai | Kiểm cấu hình triển khai (AC-014) | BR-014 |
-| NFR-005 | Sẵn sàng | Dùng được trong giờ 08:00–17:30, thứ Hai–thứ Sáu; RTO ≤ 1 ngày làm việc; RPO: không mất văn bản gốc (HC-NS giữ bản gốc, đưa lại được) | Diễn tập: xóa kho, đưa lại 3 văn bản mẫu, đo thời gian | ASM-003, ASM-005 (BRD §4.10; PO xác nhận qua OQ-005) |
+| NFR-005 | Sẵn sàng | Dùng được trong giờ 08:00–17:30, thứ Hai–thứ Sáu; không cam kết % uptime trong capstone (ASM-003); RTO ≤ 1 ngày làm việc; RPO: không mất văn bản gốc (HC-NS giữ bản gốc, đưa lại được) | Diễn tập: xóa kho, đưa lại 3 văn bản mẫu, đo thời gian | ASM-003, ASM-005 (BRD §4.10; PO xác nhận qua OQ-005) |
 | NFR-006 | Tải đồng thời | 10 câu hỏi đồng thời không có lỗi (PO xác nhận, SRC-006 D2) | Gửi 10 câu cùng lúc, đếm lỗi | BR-009 |
 | NFR-007 | Ngôn ngữ | 100 % chuỗi giao diện và thông báo lỗi bằng tiếng Việt | Kiểm tra giao diện | CON-04 (BRD §4.9; ràng buộc, không phải BR — PO chấp nhận) |
 | NFR-010 | Dung lượng | Kho ≤ 50 văn bản, mỗi văn bản ≤ 300 trang và ≤ 20 MB | Test FR-002, FR-016 | BRU-004 |
@@ -214,5 +215,9 @@ BO → BR → FR/NFR → US: [traceability.md](traceability.md). Tóm tắt cove
 |---|---|---|---|---|
 | OQ-006 | Xác nhận target MET-007 và cỡ golden set (từ BRD) | PO | 2026-11-02 | **Đã quyết** 2026-11-02 (SRC-006 D3) |
 | OQ-007 | Xác nhận ngưỡng NFR-002 và NFR-006 | PO | 2026-11-02 | **Đã quyết** 2026-11-02 (SRC-006 D1, D2) |
+
+| ID | Rủi ro | Xử lý | Owner |
+|---|---|---|---|
+| RSK-005 | RC-2 (golden set) được đo trên thành phần tạo câu trả lời nội bộ của bản phát hành này (SRC-006 D4). Nếu sau này thay bằng dịch vụ khác, kết quả cũ không còn giá trị | Đo lại toàn bộ golden set trước khi phát hành thành phần mới | PO |
 
 **Self-check (§6 của prompt):** objectives có baseline (hoặc lý do), target, cách đo; FR/NFR 100 % truy về BRD; US 100 % có AC; NFR là metric có ngưỡng; edge case cho P0 có ở §4.2; release criteria đo được. Điểm chính thức: [prd-audit.md](prd-audit.md).
